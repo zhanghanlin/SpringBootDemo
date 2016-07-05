@@ -1,0 +1,16 @@
+# Server settings
+server:
+  port: 8080
+  address: localhost
+# DATASOURCE
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.50.133:3306/andy?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+# LOGGING
+logging:
+  level:
+    com.demo.boot : INFO
+    org.springframework : WARN
