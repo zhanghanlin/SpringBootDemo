@@ -18,7 +18,7 @@ public class DemoController {
 
     @RequestMapping("{name}")
     public ModelAndView hello(@PathVariable("name") String name) {
-        return new ModelAndView("hello", "name", name);
+        return new ModelAndView("demo", "name", name);
     }
 
     @RequestMapping("find")
