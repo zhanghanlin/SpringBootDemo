@@ -13,4 +13,7 @@ spring:
 logging:
   level:
     com.demo.boot : INFO
-    org.springframework : WARN
+    org:
+      springframework : WARN
+      apache : WARN
+      hibernate : WARN
