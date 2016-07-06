@@ -4,6 +4,10 @@ server:
   address: localhost
 # DATASOURCE
 spring:
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .ftl
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.50.133:3306/andy?useUnicode=true&characterEncoding=utf-8
@@ -29,7 +33,9 @@ mybatis:
 # LOGGING
 logging:
   level:
-    com.demo.boot: INFO
+    com:
+      demo.boot: INFO
+      alibaba: WARN
     org:
       springframework: WARN
       apache: WARN
