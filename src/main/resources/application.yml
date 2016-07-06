@@ -9,11 +9,28 @@ spring:
     url: jdbc:mysql://192.168.50.133:3306/andy?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.demo.boot.model
 # LOGGING
 logging:
   level:
-    com.demo.boot : INFO
+    com.demo.boot: INFO
     org:
-      springframework : WARN
-      apache : WARN
-      hibernate : WARN
+      springframework: WARN
+      apache: WARN
+      hibernate: WARN

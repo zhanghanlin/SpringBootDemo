@@ -22,7 +22,12 @@ public class DemoController {
     }
 
     @RequestMapping("find")
-    public String find() {
-        return JSONObject.toJSONString(demoService.find());
+    public String findJdbc() {
+        return JSONObject.toJSONString(demoService.findJdbc());
+    }
+
+    @RequestMapping("find_m")
+    public String findMapper() {
+        return JSONObject.toJSONString(demoService.findMapper());
     }
 }

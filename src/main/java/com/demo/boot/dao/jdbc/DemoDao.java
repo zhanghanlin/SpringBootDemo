@@ -1,5 +1,7 @@
-package com.demo.boot.dao;
+package com.demo.boot.dao.jdbc;
 
+import com.demo.boot.model.Demo;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,8 +14,8 @@ public class DemoDao {
     @Resource
     JdbcTemplate jdbcTemplate;
 
-    public List find() {
+    public List<Demo> find() {
         String sql = "select * from c_product";
-        return jdbcTemplate.queryForList(sql);
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Demo.class));
     }
 }
