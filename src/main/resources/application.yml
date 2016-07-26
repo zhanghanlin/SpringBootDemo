@@ -10,7 +10,7 @@ spring:
       suffix: .html
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.50.133:3306/andy?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.100.172:3306/reptile?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
     # 使用druid数据源
@@ -48,3 +48,4 @@ logging:
       springframework: WARN
       apache: WARN
       hibernate: WARN
+      thymeleaf: WARN
