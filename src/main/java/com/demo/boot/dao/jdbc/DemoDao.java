@@ -15,7 +15,7 @@ public class DemoDao {
     JdbcTemplate jdbcTemplate;
 
     public List<Demo> find() {
-        String sql = "select * from c_product";
+        String sql = "select * from demo";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Demo.class));
     }
 }

@@ -11,7 +11,7 @@ spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.100.172:3306/reptile?useUnicode=true&characterEncoding=utf-8
-    username: root
+    username: test
     password: 123456
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
