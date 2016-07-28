@@ -62,8 +62,15 @@
                 canvas.id = "canvas";
                 var dataUrl = canvas.toDataURL("image/jpeg");
                 var newImg = document.createElement("img");
-                newImg.src = dataUrl;
-                $('.modal .modal-body').html(newImg);
+                $.ajax({
+                    url: '/boot/saveBase64',
+                    type: 'POST',
+                    data: {base: dataUrl},
+                    success: function (data) {
+                        newImg.src = "/boot/base642jpeg?uuid=" + data;
+                        $('.modal .modal-body').html(newImg);
+                    }
+                });
             }
         });
     });
