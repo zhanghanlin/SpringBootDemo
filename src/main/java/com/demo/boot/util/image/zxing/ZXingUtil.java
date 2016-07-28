@@ -1,4 +1,4 @@
-package com.demo.boot.zxing;
+package com.demo.boot.util.image.zxing;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;

@@ -1,6 +1,6 @@
 package com.demo.boot.controller;
 
-import com.demo.boot.zxing.ZXingUtil;
+import com.demo.boot.util.image.zxing.ZXingUtil;
 import com.google.zxing.WriterException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
