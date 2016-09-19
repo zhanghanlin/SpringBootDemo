@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1>用户列表--<a href="${pageContext.request.contextPath }/logout">退出登录</a></h1>
+<h2>权限列表</h2>
+<shiro:authenticated>用户已经登录显示此内容<br/></shiro:authenticated>
+<br/>
+<shiro:hasRole name="manager">manager角色登录显示此内容<br/></shiro:hasRole>
+<shiro:hasRole name="admin">admin角色登录显示此内容<br/></shiro:hasRole>
+<shiro:hasRole name="normal">normal角色登录显示此内容<br/></shiro:hasRole>
+<br/>
+
+<shiro:hasAnyRoles name="manager,admin">manager or admin 角色用户登录显示此内容<br/></shiro:hasAnyRoles>
+<br/>
+<shiro:principal/>
+-显示当前登录用户名<br/><br/>
+<shiro:hasPermission name="add">add权限用户显示此内容<br/></shiro:hasPermission>
+<shiro:hasPermission name="user:query">user:query权限用户显示此内容<br/></shiro:hasPermission>
+<shiro:lacksPermission name="user:query">不具有user:query权限的用户显示此内容 <br/></shiro:lacksPermission>
+
+<br/>所有用户列表：<br/>
+<ul>
+    <li th:each="user,userStat : ${userList}">
+        <em th:text="${user.userName}"></em>
+    </li>
+</ul>
+</body>
+</html>

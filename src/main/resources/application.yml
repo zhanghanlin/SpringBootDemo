@@ -10,9 +10,9 @@ spring:
       suffix: .html
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.100.172:3306/reptile?useUnicode=true&characterEncoding=utf-8
-    username: test
-    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/boot?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: zhanghanlin
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     # 最大连接池数量
@@ -37,7 +37,7 @@ spring:
     maxOpenPreparedStatements: 20
 mybatis:
   mapperLocations: classpath:mapper/*.xml
-  typeAliasesPackage: com.demo.boot.model
+  typeAliasesPackage: com.demo.boot.entity
 # LOGGING
 logging:
   level:
