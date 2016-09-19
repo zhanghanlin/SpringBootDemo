@@ -1,6 +1,7 @@
 package com.demo.boot.controller;
 
 import com.demo.boot.entity.User;
+import com.demo.boot.mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -13,12 +14,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @EnableAutoConfiguration
 @RestController
 public class ShiroController {
 
     static final Logger LOG = LoggerFactory.getLogger(ShiroController.class);
+
+    @Resource
+    UserMapper userMapper;
+
+    @RequestMapping("/")
+    public String index() {
+        return "index";
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView loginForm() {
@@ -28,9 +41,9 @@ public class ShiroController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public ModelAndView login(User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "login";
+            return new ModelAndView("login");
         }
         String username = user.getUserName();
         UsernamePasswordToken token = new UsernamePasswordToken(username, user.getPassword());
@@ -64,10 +77,11 @@ public class ShiroController {
         //验证是否登录成功
         if (currentUser.isAuthenticated()) {
             LOG.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-            return "redirect:/user";
+            List<User> list = userMapper.getUserList();
+            return new ModelAndView("user", "userList", list);
         } else {
             token.clear();
-            return "redirect:/login";
+            return new ModelAndView(new RedirectView("login"));
         }
     }
 
