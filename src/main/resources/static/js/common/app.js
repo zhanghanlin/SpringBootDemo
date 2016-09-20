@@ -429,6 +429,8 @@ function _init() {
                 e.preventDefault();
             }
             if (checkElement.length == 0) {
+                $this.parents('ul').first().find('li.active').removeClass('active');
+                $this.parent("li").addClass('active');
                 $('.content-wrapper > .content').html('');
                 $('.content-wrapper > .content').load($this.attr('link'));
             }
