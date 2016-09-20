@@ -22,8 +22,8 @@ public class BaseController {
     static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
 
     @RequestMapping("/")
-    public String index() {
-        return "index";
+    public ModelAndView index() {
+        return new ModelAndView("index");
     }
 
 
@@ -71,7 +71,7 @@ public class BaseController {
         //验证是否登录成功
         if (currentUser.isAuthenticated()) {
             LOG.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-            return new ModelAndView(new RedirectView("/user/list"));
+            return new ModelAndView(new RedirectView("/"));
         } else {
             token.clear();
             return new ModelAndView(new RedirectView("login"));
