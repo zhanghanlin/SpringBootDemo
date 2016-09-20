@@ -11,9 +11,9 @@ public interface UserMapper {
 
     User get(Integer id);
 
-    User getByName(String userName);
+    User getByUserName(String userName);
 
-    List<User> getUserList();
+    List<User> getAllUser();
 
     int update(User record);
 }

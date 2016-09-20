@@ -89,6 +89,6 @@ public class BaseController {
     @RequestMapping("/403")
     public ModelAndView unauthorizedRole() {
         LOG.info("------没有权限-------");
-        return new ModelAndView(new RedirectView("error/403"));
+        return new ModelAndView("error/403");
     }
 }

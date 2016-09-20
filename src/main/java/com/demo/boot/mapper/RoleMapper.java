@@ -5,9 +5,13 @@ import com.demo.boot.entity.Role;
 import java.util.List;
 
 public interface RoleMapper {
+    int delete(Integer id);
+
     int insert(Role record);
 
-    int insertSelective(Role record);
+    Role get(Integer id);
 
-    List<Role> getRolesByUser(Integer id);
+    List<Role> getRoleByUser(Integer id);
+
+    int update(Role record);
 }

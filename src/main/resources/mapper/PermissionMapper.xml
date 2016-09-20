@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.demo.boot.mapper.RoleMapper" >
-  <resultMap id="BaseResultMap" type="com.demo.boot.entity.Role" >
+<mapper namespace="com.demo.boot.mapper.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.boot.entity.Permission" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="unique_key" property="uniqueKey" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
@@ -14,27 +20,21 @@
     <result column="version" property="version" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    r.id, r.name, r.note, r.unique_key, r.status, r.created_at, r.created_by, r.changed_at, r.changed_by,
-    r.version
+    id, name, note, code, unique_key, parent_id, link, type, icon, weight, status, created_at, 
+    created_by, changed_at, changed_by, version
   </sql>
   <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from m_role r
+    from m_permission
     where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="getRoleByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from m_role r,m_user_role ur
-    where r.id = ur.role_id AND ur.user_id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="delete" parameterType="java.lang.Integer" >
-    delete from m_role
+    delete from m_permission
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.demo.boot.entity.Role" >
-    insert into m_role
+  <insert id="insert" parameterType="com.demo.boot.entity.Permission" >
+    insert into m_permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -45,8 +45,26 @@
       <if test="note != null" >
         note,
       </if>
+      <if test="code != null" >
+        code,
+      </if>
       <if test="uniqueKey != null" >
         unique_key,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="weight != null" >
+        weight,
       </if>
       <if test="status != null" >
         status,
@@ -77,8 +95,26 @@
       <if test="note != null" >
         #{note,jdbcType=VARCHAR},
       </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
       <if test="uniqueKey != null" >
         #{uniqueKey,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -100,8 +136,8 @@
       </if>
     </trim>
   </insert>
-  <update id="update" parameterType="com.demo.boot.entity.Role" >
-    update m_role
+  <update id="update" parameterType="com.demo.boot.entity.Permission" >
+    update m_permission
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -109,8 +145,26 @@
       <if test="note != null" >
         note = #{note,jdbcType=VARCHAR},
       </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
       <if test="uniqueKey != null" >
         unique_key = #{uniqueKey,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},

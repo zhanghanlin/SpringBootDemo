@@ -2,20 +2,12 @@ package com.demo.boot.entity;
 
 import java.util.Date;
 
-public class User {
+public class RolePermission {
     private Integer id;
 
-    private String userName;
+    private Integer roleId;
 
-    private String password;
-
-    private String displayName;
-
-    private String email;
-
-    private String phone;
-
-    private Integer status;
+    private Integer permissionId;
 
     private Date createdAt;
 
@@ -35,52 +27,20 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
-    public String getPassword() {
-        return password;
+    public Integer getPermissionId() {
+        return permissionId;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName == null ? null : displayName.trim();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setPermissionId(Integer permissionId) {
+        this.permissionId = permissionId;
     }
 
     public Date getCreatedAt() {

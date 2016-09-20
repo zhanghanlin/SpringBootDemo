@@ -9,8 +9,6 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +19,6 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfiguration {
-
-    static final Logger LOG = LoggerFactory.getLogger(ShiroConfiguration.class);
 
     /**
      * 这是个DestructionAwareBeanPostProcessor的子类
@@ -114,6 +110,7 @@ public class ShiroConfiguration {
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
         filterChainDefinitionManager.put("/logout", "logout");
         filterChainDefinitionManager.put("/login", "anon");
+        filterChainDefinitionManager.put("/403", "anon");
         filterChainDefinitionManager.put("/js/**", "anon");
         filterChainDefinitionManager.put("/css/**", "anon");
         filterChainDefinitionManager.put("/images/**", "anon");
