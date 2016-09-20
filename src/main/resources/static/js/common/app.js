@@ -377,59 +377,6 @@ function _init() {
         }
     };
 
-
-    /*
-     * Tree() Data
-     * ==================
-     *
-     */
-    $.AdminLTE.treeData = function (arr, data) {
-        var str = [];
-        $.each(arr, function (i, o) {
-            if (o.code.length && o.code.length == 4) {
-                str.push('<li class="header">' + o.name + '</li>');
-                str.push($.AdminLTE.treeData(data[o.id], data, 'treeview-menu'));
-            } else {
-                if (data[o.id]) {
-                    str.push('<li class="treeview">')
-                } else {
-                    str.push('<li>');
-                }
-                str.push('<a href="' + o.link + '"><i class="fa fa-files-o"></i><span>' + o.name + '</span>');
-                if (data[o.id]) {
-                    str.push('<i class="fa fa-angle-left pull-right"></i>');
-                }
-                str.push('</a>');
-                if (data[o.id]) {
-                    str.push($.AdminLTE.subTreeData(data[o.id], data,
-                        'treeview-menu'));
-                }
-                str.push('</li>');
-            }
-        });
-        return str.join('');
-    };
-    $.AdminLTE.subTreeData = function (arr, data) {
-        if (!arr)
-            return false;
-        var str = [];
-        str.push('<ul class="treeview-menu">');
-        $.each(arr, function (i, o) {
-            str.push('<li><a href="javascript:;" link="' + o.link + '"><i class="fa fa-circle-o"></i>');
-            str.push(o.name);
-            if (data[o.id]) {
-                str.push('<i class="fa fa-angle-left pull-right">');
-            }
-            str.push('</a>');
-            if (data[o.id]) {
-                str.push(this(data[o.id], data, 'treeview-menu'));
-            }
-            str.push('</li>');
-        });
-        str.push('</ul>');
-        return str.join('');
-    };
-
     /* Tree()
      * ======
      * Converts the sidebar into a multilevel
@@ -439,9 +386,6 @@ function _init() {
      * @Usage: $.AdminLTE.tree('.sidebar')
      */
     $.AdminLTE.tree = function (menu) {
-        $.getJSON('/permission/api/tree', function (data) {
-            $('.sidebar-menu').append($.AdminLTE.treeData(data.data[0], data.data));
-        });
         var _this = this;
         var animationSpeed = $.AdminLTE.options.animationSpeed;
         $(document).delegate(menu + ' li a', 'click', function (e) {
@@ -485,25 +429,8 @@ function _init() {
                 e.preventDefault();
             }
             if (checkElement.length == 0) {
-                var link = $this.attr('link');
-                var host = 'portal.cheyipai.com';
-                if (link.indexOf('http') >= 0) {
-                    if (link.indexOf(host) < 0) {
-                        var title = $this.text();
-                        var html = '<section class="content-header">\
-                            <h1>Monitor<small></small></h1>\
-                            <ol class="breadcrumb">\
-                                <li><a href="#"><i class="fa fa-dashboard"></i>' + title + '</a></li>\
-                                <li class="active">Monitor</li></ol></section>\
-                            <section class="content"><div class="box">\
-                            <iframe id="content-iframe" src="' + $this.attr('link') + '" width="100%" height="' + $('.wrapper').height() + '"></iframe>\
-                            </div></section>';
-                        $('.content-wrapper').html(html);
-                        return;
-                    }
-                }
                 $('.content-wrapper').html('');
-                $('.content-wrapper').load(link);
+                $('.content-wrapper').load($this.attr('link'));
             }
         });
     };

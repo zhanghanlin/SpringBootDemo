@@ -1,27 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Index</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/boot/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/css/boot/ionicons.min.css"/>
-    <link rel="stylesheet" href="/css/boot/boot.min.css"/>
-    <link rel="stylesheet" href="/css/boot/_all-skins.min.css"/>
-    <link rel="stylesheet" href="/css/boot/blue.css"/>
-    <link rel="stylesheet" href="/css/boot/morris.css"/>
-    <link rel="icon" type="image/png" href="/images/favicon.ico" sizes="32x32"/>
-    <!--[if lt IE 9]>
-    <script src="/js/ie/html5shiv.min.js"></script>
-    <script src="/js/ie/respond.min.js"></script>
-    <![endif]-->
-    <style>
-        ul.sidebar-menu a {
-            cursor: pointer;
-        }
-    </style>
+    <div th:substituteby="/common/include"></div>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -102,8 +83,8 @@
 <script src="/js/jQuery/jquery.min.js"></script>
 <script src="/js/bootstrap/bootstrap.min.js"></script>
 <script src="/js/jQuery/jquery.slimscroll.min.js"></script>
-<script src="/js/boot/app.js"></script>
-<script src="/js/boot/dashboard.js"></script>
-<script src="/js/boot/boot.js"></script>
+<script src="/js/common/app.js"></script>
+<script src="/js/common/dashboard.js"></script>
+<script src="/js/common/boot.js"></script>
 </body>
 </html>

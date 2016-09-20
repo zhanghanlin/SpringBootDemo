@@ -1,11 +1,11 @@
 package com.demo.boot.shiro;
 
+import com.demo.boot.business.UserService;
 import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.Role;
 import com.demo.boot.entity.User;
 import com.demo.boot.mapper.PermissionMapper;
 import com.demo.boot.mapper.RoleMapper;
-import com.demo.boot.mapper.UserMapper;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.shiro.authc.*;
@@ -26,7 +26,7 @@ public class ShiroRealm extends AuthorizingRealm {
     static final Logger LOG = LoggerFactory.getLogger(ShiroRealm.class);
 
     @Resource
-    UserMapper userMapper;
+    UserService userService;
 
     @Resource
     RoleMapper roleMapper;
@@ -47,7 +47,7 @@ public class ShiroRealm extends AuthorizingRealm {
         //获取当前登录输入的用户名，等价于(String) principalCollection.fromRealm(getName()).iterator().next();
         String loginName = (String) super.getAvailablePrincipal(principals);
         //到数据库查是否有此对象
-        User user = userMapper.getByUserName(loginName);// 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
+        User user = userService.getByUserName(loginName);// 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
         if (user != null) {
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -85,7 +85,7 @@ public class ShiroRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         LOG.info("验证当前Subject时获取到token为：" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));
         //查出是否有此用户
-        User user = userMapper.getByUserName(token.getUsername());
+        User user = userService.getByUserName(token.getUsername());
         if (user != null) {
             // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
             return new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), getName());

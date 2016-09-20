@@ -1,7 +1,7 @@
 package com.demo.boot.controller;
 
+import com.demo.boot.business.UserService;
 import com.demo.boot.entity.User;
-import com.demo.boot.mapper.UserMapper;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,11 +17,11 @@ import java.util.List;
 public class UserController {
 
     @Resource
-    UserMapper userMapper;
+    UserService userService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView user() {
-        List<User> list = userMapper.getAllUser();
-        return new ModelAndView("user", "userList", list);
+        List<User> list = userService.getAllUser();
+        return new ModelAndView("user/list", "userList", list);
     }
 }
