@@ -2,9 +2,9 @@ package com.demo.boot.controller.api;
 
 import com.demo.boot.business.UserService;
 import com.demo.boot.entity.User;
+import com.demo.boot.utils.StringUtils;
 import com.demo.boot.vo.TablePage;
 import com.github.pagehelper.Page;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +34,7 @@ public class UserApiController {
         String order = "DESC";
         String columnName = request.getParameter("columns[" + column + "][data]");
         if (StringUtils.isNotBlank(columnName)) {
-            sort = columnName;
+            sort = StringUtils.camelToUnderline(columnName);
         }
         if (StringUtils.isNotBlank(dir)) {
             order = dir;
