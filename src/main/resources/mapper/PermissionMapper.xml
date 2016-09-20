@@ -20,14 +20,20 @@
     <result column="version" property="version" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, note, code, unique_key, parent_id, link, type, icon, weight, status, created_at, 
-    created_by, changed_at, changed_by, version
+    p.id, p.name, p.note, p.code, p.unique_key, p.parent_id, p.link, p.type, p.icon,
+    p.weight, p.status, p.created_at,p.created_by, p.changed_at, p.changed_by, p.version
   </sql>
   <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from m_permission
+    from m_permission p
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getPermissionByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from m_permission p,m_role_permission rp,m_role_user ru
+    where p.id = rp.permission_id AND rp.role_id = ru.role_id AND ru.id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="delete" parameterType="java.lang.Integer" >
     delete from m_permission

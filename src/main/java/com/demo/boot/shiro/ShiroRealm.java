@@ -1,7 +1,9 @@
 package com.demo.boot.shiro;
 
+import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.Role;
 import com.demo.boot.entity.User;
+import com.demo.boot.mapper.PermissionMapper;
 import com.demo.boot.mapper.RoleMapper;
 import com.demo.boot.mapper.UserMapper;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -29,6 +31,9 @@ public class ShiroRealm extends AuthorizingRealm {
     @Resource
     RoleMapper roleMapper;
 
+    @Resource
+    PermissionMapper permissionMapper;
+
     /**
      * 权限认证，为当前登录的Subject授予角色和权限
      *
@@ -47,13 +52,20 @@ public class ShiroRealm extends AuthorizingRealm {
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             Set<String> roleNames = new HashSet<>();
+            Set<String> permissionNames = new HashSet<>();
             //用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
             List<Role> roleList = roleMapper.getRoleByUser(user.getId());
+            List<Permission> permissionList = permissionMapper.getPermissionByUser(user.getId());
             for (Role role : roleList) {
-                roleNames.add(role.getName());
+                roleNames.add(role.getUniqueKey());
+            }
+            for (Permission permission : permissionList) {
+                permissionNames.add(permission.getUniqueKey());
             }
             //用户的角色集合
             info.setRoles(roleNames);
+            //用户的权限集合
+            info.setStringPermissions(permissionNames);
             return info;
         }
         // 返回null的话，就会导致任何用户访问被拦截的请求时，都会自动跳转到unauthorizedUrl指定的地址
