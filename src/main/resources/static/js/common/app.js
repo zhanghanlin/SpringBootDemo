@@ -429,8 +429,8 @@ function _init() {
                 e.preventDefault();
             }
             if (checkElement.length == 0) {
-                $('.content-wrapper').html('');
-                $('.content-wrapper').load($this.attr('link'));
+                $('.content-wrapper > .content').html('');
+                $('.content-wrapper > .content').load($this.attr('link'));
             }
         });
     };
