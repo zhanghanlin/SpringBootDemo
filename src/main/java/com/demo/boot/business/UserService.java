@@ -2,6 +2,8 @@ package com.demo.boot.business;
 
 import com.demo.boot.entity.User;
 import com.demo.boot.mapper.UserMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,6 +17,7 @@ public class UserService {
 
     /**
      * 根据用户名查询用户
+     *
      * @param userName
      * @return
      */
@@ -29,5 +32,18 @@ public class UserService {
      */
     public List<User> getAllUser() {
         return userMapper.getAllUser();
+    }
+
+    /**
+     * 分页
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    public Page<User> getAllUserByPage(int pageNo, int pageSize, String orderBy) {
+        Page<User> page = PageHelper.startPage(pageNo, pageSize, orderBy);
+        userMapper.getAllUser();
+        return page;
     }
 }

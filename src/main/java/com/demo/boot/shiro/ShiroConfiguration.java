@@ -11,8 +11,6 @@ import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +21,6 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfiguration {
-
-    final static Logger LOG = LoggerFactory.getLogger(ShiroConfiguration.class);
 
     /**
      * 这是个DestructionAwareBeanPostProcessor的子类
@@ -76,7 +72,6 @@ public class ShiroConfiguration {
      */
     @Bean
     public SimpleCookie rememberMeCookie() {
-        LOG.info("ShiroConfiguration.rememberMeCookie()");
         //这个参数是cookie的名称,对应前端的checkbox的name = rememberMe
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         //记住我cookie生效时间30天 ,单位秒
@@ -91,7 +86,6 @@ public class ShiroConfiguration {
      */
     @Bean
     public CookieRememberMeManager rememberMeManager() {
-        LOG.info("ShiroConfiguration.rememberMeManager()");
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
         return cookieRememberMeManager;

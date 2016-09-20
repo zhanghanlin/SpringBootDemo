@@ -35,9 +35,9 @@ spring:
     # 是否缓存preparedStatement,也就是PSCache
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
-mybatis:
-  mapperLocations: classpath:mapper/*.xml
-  typeAliasesPackage: com.demo.boot.entity
+#mybatis:
+#  mapperLocations: classpath:mapper/*.xml
+#  typeAliasesPackage: com.demo.boot.entity
 # LOGGING
 logging:
   level:
