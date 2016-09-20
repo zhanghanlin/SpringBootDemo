@@ -28,8 +28,8 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     @Autowired
     DataSource dataSource;
 
-    @Bean(name = "sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactoryBean() {
+    @Bean
+    public SqlSessionFactory sqlSessionFactory() {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setTypeAliasesPackage("com.demo.boot.entity");
