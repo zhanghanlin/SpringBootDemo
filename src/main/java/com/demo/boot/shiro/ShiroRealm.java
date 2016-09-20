@@ -1,11 +1,11 @@
 package com.demo.boot.shiro;
 
+import com.demo.boot.business.PermissionService;
+import com.demo.boot.business.RoleService;
 import com.demo.boot.business.UserService;
 import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.Role;
 import com.demo.boot.entity.User;
-import com.demo.boot.mapper.PermissionMapper;
-import com.demo.boot.mapper.RoleMapper;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.shiro.authc.*;
@@ -29,10 +29,10 @@ public class ShiroRealm extends AuthorizingRealm {
     UserService userService;
 
     @Resource
-    RoleMapper roleMapper;
+    RoleService roleService;
 
     @Resource
-    PermissionMapper permissionMapper;
+    PermissionService permissionService;
 
     /**
      * 权限认证，为当前登录的Subject授予角色和权限
@@ -54,8 +54,8 @@ public class ShiroRealm extends AuthorizingRealm {
             Set<String> roleNames = new HashSet<>();
             Set<String> permissionNames = new HashSet<>();
             //用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
-            List<Role> roleList = roleMapper.getRoleByUser(user.getId());
-            List<Permission> permissionList = permissionMapper.getPermissionByUser(user.getId());
+            List<Role> roleList = roleService.getRoleByUser(user.getId());
+            List<Permission> permissionList = permissionService.getPermissionByUser(user.getId());
             for (Role role : roleList) {
                 roleNames.add(role.getUniqueKey());
             }

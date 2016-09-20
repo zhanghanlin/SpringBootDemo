@@ -13,5 +13,7 @@ public interface PermissionMapper {
 
     List<Permission> getPermissionByUser(Integer id);
 
+    List<Permission> getAll();
+
     int update(Permission record);
 }

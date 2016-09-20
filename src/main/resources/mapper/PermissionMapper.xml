@@ -5,35 +5,52 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="note" property="note" jdbcType="VARCHAR" />
-    <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="unique_key" property="uniqueKey" jdbcType="VARCHAR" />
-    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <!--<result column="parent_id" property="parentId" jdbcType="INTEGER" />-->
+    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
     <result column="link" property="link" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="CHAR" />
+    <result column="is_sys" property="isSys" jdbcType="CHAR" />
     <result column="weight" property="weight" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="CHAR" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
     <result column="changed_at" property="changedAt" jdbcType="TIMESTAMP" />
     <result column="changed_by" property="changedBy" jdbcType="VARCHAR" />
     <result column="version" property="version" jdbcType="INTEGER" />
+    <association property="parent" column="parent_id" javaType="com.demo.boot.entity.Permission">
+      <id column="parent.id" property="id" />
+      <result column="parent.name" property="name" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    p.id, p.name, p.note, p.code, p.unique_key, p.parent_id, p.link, p.type, p.icon,
-    p.weight, p.status, p.created_at,p.created_by, p.changed_at, p.changed_by, p.version
+    p.id, p.name, p.note, p.unique_key, p.parent_id AS 'parent.id', p.parent_ids, p.link, p.icon, p.is_show,
+    p.is_sys, p.weight, p.status, p.created_at, p.created_by, p.changed_at, p.changed_by, p.version, pp.name AS 'parent.name'
+  </sql>
+  <sql id="menuJoins">
+    LEFT JOIN m_permission pp ON pp.id = p.parent_id
   </sql>
   <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from m_permission p
-    where id = #{id,jdbcType=INTEGER}
+    <include refid="menuJoins"/>
+    where p.id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from m_permission p
+    <include refid="menuJoins"/>
   </select>
   <select id="getPermissionByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
-    from m_permission p,m_role_permission rp,m_user_role ur
-    where p.id = rp.permission_id AND rp.role_id = ur.role_id AND ur.id = #{id,jdbcType=INTEGER}
+    from m_permission p
+    <include refid="menuJoins"/>
+     JOIN m_role_permission rp ON rp.permission_id = p.id
+     JOIN m_user_role ur ON ur.role_id = rp.role_id AND ur.id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="delete" parameterType="java.lang.Integer" >
     delete from m_permission
@@ -51,23 +68,26 @@
       <if test="note != null" >
         note,
       </if>
-      <if test="code != null" >
-        code,
-      </if>
       <if test="uniqueKey != null" >
         unique_key,
       </if>
       <if test="parentId != null" >
         parent_id,
       </if>
+      <if test="parentIds != null" >
+        parent_ids,
+      </if>
       <if test="link != null" >
         link,
       </if>
-      <if test="type != null" >
-        type,
-      </if>
       <if test="icon != null" >
         icon,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="isSys != null" >
+        is_sys,
       </if>
       <if test="weight != null" >
         weight,
@@ -101,29 +121,32 @@
       <if test="note != null" >
         #{note,jdbcType=VARCHAR},
       </if>
-      <if test="code != null" >
-        #{code,jdbcType=VARCHAR},
-      </if>
       <if test="uniqueKey != null" >
         #{uniqueKey,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
         #{parentId,jdbcType=INTEGER},
       </if>
+      <if test="parentIds != null" >
+        #{parentIds,jdbcType=VARCHAR},
+      </if>
       <if test="link != null" >
         #{link,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
-      </if>
       <if test="icon != null" >
         #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=CHAR},
+      </if>
+      <if test="isSys != null" >
+        #{isSys,jdbcType=CHAR},
       </if>
       <if test="weight != null" >
         #{weight,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=INTEGER},
+        #{status,jdbcType=CHAR},
       </if>
       <if test="createdAt != null" >
         #{createdAt,jdbcType=TIMESTAMP},
@@ -151,29 +174,32 @@
       <if test="note != null" >
         note = #{note,jdbcType=VARCHAR},
       </if>
-      <if test="code != null" >
-        code = #{code,jdbcType=VARCHAR},
-      </if>
       <if test="uniqueKey != null" >
         unique_key = #{uniqueKey,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
+      <if test="parentIds != null" >
+        parent_ids = #{parentIds,jdbcType=VARCHAR},
+      </if>
       <if test="link != null" >
         link = #{link,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
-      </if>
       <if test="icon != null" >
         icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=CHAR},
+      </if>
+      <if test="isSys != null" >
+        is_sys = #{isSys,jdbcType=CHAR},
       </if>
       <if test="weight != null" >
         weight = #{weight,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
+        status = #{status,jdbcType=CHAR},
       </if>
       <if test="createdAt != null" >
         created_at = #{createdAt,jdbcType=TIMESTAMP},

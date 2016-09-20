@@ -1,6 +1,9 @@
 package com.demo.boot.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
+import java.util.List;
 
 public class Permission {
     private Integer id;
@@ -9,17 +12,19 @@ public class Permission {
 
     private String note;
 
-    private String code;
-
     private String uniqueKey;
 
-    private Integer parentId;
+    private Permission parent;
+
+    private String parentIds;
 
     private String link;
 
-    private Integer type;
-
     private String icon;
+
+    private Integer isShow;
+
+    private Integer isSys;
 
     private Integer weight;
 
@@ -59,14 +64,6 @@ public class Permission {
         this.note = note == null ? null : note.trim();
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
-
     public String getUniqueKey() {
         return uniqueKey;
     }
@@ -75,12 +72,20 @@ public class Permission {
         this.uniqueKey = uniqueKey == null ? null : uniqueKey.trim();
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Permission getParent() {
+        return parent;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setParentId(Permission parent) {
+        this.parent = parent;
+    }
+
+    public String getParentIds() {
+        return parentIds;
+    }
+
+    public void setParentIds(String parentIds) {
+        this.parentIds = parentIds == null ? null : parentIds.trim();
     }
 
     public String getLink() {
@@ -91,20 +96,28 @@ public class Permission {
         this.link = link == null ? null : link.trim();
     }
 
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
     public String getIcon() {
         return icon;
     }
 
     public void setIcon(String icon) {
         this.icon = icon == null ? null : icon.trim();
+    }
+
+    public Integer getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(Integer isShow) {
+        this.isShow = isShow;
+    }
+
+    public Integer getIsSys() {
+        return isSys;
+    }
+
+    public void setIsSys(Integer isSys) {
+        this.isSys = isSys;
     }
 
     public Integer getWeight() {
@@ -161,5 +174,32 @@ public class Permission {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    @JSONField(serialize = false)
+    public static void sortList(List<Permission> list, List<Permission> sourceList, Integer parentId, boolean cascade) {
+        for (int i = 0; i < sourceList.size(); i++) {
+            Permission e = sourceList.get(i);
+            if (e.getParent() != null && e.getParent().getId() != null
+                    && e.getParent().getId().equals(parentId)) {
+                list.add(e);
+                if (cascade) {
+                    // 判断是否还有子节点, 有则继续获取子节点
+                    for (int j = 0; j < sourceList.size(); j++) {
+                        Permission child = sourceList.get(j);
+                        if (child.getParent() != null && child.getParent().getId() != null
+                                && child.getParent().getId().equals(e.getId())) {
+                            sortList(list, sourceList, e.getId(), true);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @JSONField(serialize = false)
+    public static Integer getRootId() {
+        return 0;
     }
 }

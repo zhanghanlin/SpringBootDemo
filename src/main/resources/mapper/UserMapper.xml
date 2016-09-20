@@ -25,7 +25,7 @@
     from m_user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="getAllUser" resultMap="BaseResultMap">
+  <select id="getAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from m_user

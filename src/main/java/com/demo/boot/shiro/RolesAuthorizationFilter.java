@@ -6,6 +6,9 @@ import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * 用于增加角色判断,默认是AND更改为OR
+ */
 public class RolesAuthorizationFilter extends AuthorizationFilter {
 
     @Override

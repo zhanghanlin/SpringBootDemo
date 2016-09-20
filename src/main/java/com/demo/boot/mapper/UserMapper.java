@@ -13,7 +13,7 @@ public interface UserMapper {
 
     User getByUserName(String userName);
 
-    List<User> getAllUser();
+    List<User> getAll();
 
     int update(User record);
 }

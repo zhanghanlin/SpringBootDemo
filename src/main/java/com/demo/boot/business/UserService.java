@@ -30,8 +30,8 @@ public class UserService {
      *
      * @return
      */
-    public List<User> getAllUser() {
-        return userMapper.getAllUser();
+    public List<User> getAll() {
+        return userMapper.getAll();
     }
 
     /**
@@ -43,7 +43,7 @@ public class UserService {
      */
     public Page<User> getAllUserByPage(int pageNo, int pageSize, String orderBy) {
         Page<User> page = PageHelper.startPage(pageNo, pageSize, orderBy);
-        userMapper.getAllUser();
+        userMapper.getAll();
         return page;
     }
 }

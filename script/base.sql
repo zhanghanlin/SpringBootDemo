@@ -71,47 +71,49 @@ CREATE TABLE `m_role` (
 
 INSERT INTO m_role (name, note, unique_key) VALUES ('Admin', '管理员', 'admin');
 INSERT INTO m_role (name, note, unique_key) VALUES ('NormalUser', '普通用户', 'normal_user');
+
 -- ----------------------------
 -- Table structure for `template`
 -- ----------------------------
 DROP TABLE IF EXISTS `m_permission`;
 CREATE TABLE `m_permission` (
-  `id`         INT(11)      NOT NULL AUTO_INCREMENT,
-  `name`       VARCHAR(100) NOT NULL
+  `id`         INT(11)       NOT NULL AUTO_INCREMENT,
+  `name`       VARCHAR(100)  NOT NULL
   COMMENT '权限名',
   `note`       VARCHAR(200) COMMENT '权限说明',
-  `code`       VARCHAR(200) COMMENT '权限结构码',
   `unique_key` VARCHAR(200) COMMENT '权限唯一key',
-  `parent_id`  INT(11)               DEFAULT 0
+  `parent_id`  INT(11)                DEFAULT 0
   COMMENT '上一级权限Id',
+  `parent_ids` VARCHAR(2000) NOT NULL
+  COMMENT '所有父级Id',
   `link`       VARCHAR(200) COMMENT '权限对应的功能连接',
-  `type`       INT(3)       NOT NULL DEFAULT 0
-  COMMENT '权限类型,0-菜单,1-按钮',
-  `icon`       VARCHAR(200) COMMENT '权限个性化ICON',
+  `icon`       VARCHAR(100) COMMENT '图标',
+  `is_show`    INT(1)       NOT NULL
+  COMMENT '是否在菜单中显示',
+  `is_sys`     INT(1)       NOT NULL DEFAULT 1
+  COMMENT '是否系统菜单',
   `weight`     INT(3) COMMENT '权重,排序使用',
-  `status`     INT(3)       NOT NULL DEFAULT '0'
+  `status`     INT(1)       NOT NULL DEFAULT 0
   COMMENT '状态,默认正常',
-  `created_at` DATETIME     NOT NULL DEFAULT NOW()
+  `created_at` DATETIME      NOT NULL DEFAULT NOW()
   COMMENT '创建时间',
-  `created_by` VARCHAR(100) NOT NULL DEFAULT 'System'
+  `created_by` VARCHAR(100)  NOT NULL DEFAULT 'System'
   COMMENT '创建人',
-  `changed_at` DATETIME              DEFAULT NOW()
+  `changed_at` DATETIME               DEFAULT NOW()
   COMMENT '修改时间',
-  `changed_by` VARCHAR(100)          DEFAULT NULL
+  `changed_by` VARCHAR(100)           DEFAULT NULL
   COMMENT '修改人',
-  `version`    INT(10)      NOT NULL DEFAULT '1',
+  `version`    INT(10)       NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNI_ID` (`id`) USING BTREE,
-  UNIQUE KEY `UNI_CODE` (`code`) USING BTREE,
   UNIQUE KEY `UNI_KEY` (`unique_key`) USING BTREE
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 4
   DEFAULT CHARSET = utf8;
 
-
-INSERT INTO m_permission (name, note, code, unique_key, weight)
-VALUES ('Boot', 'Boot', '001', 'boot', 1);
+INSERT INTO m_permission (name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('BOOT', '主权限菜单', 'boot', 0, '0,', '', '', 1, 1, 1);
 
 -- ----------------------------
 -- Table structure for `template`
