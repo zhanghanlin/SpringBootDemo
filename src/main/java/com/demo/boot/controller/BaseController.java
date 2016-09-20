@@ -1,7 +1,6 @@
 package com.demo.boot.controller;
 
 import com.demo.boot.entity.User;
-import com.demo.boot.mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -16,22 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.annotation.Resource;
-import java.util.List;
-
 @EnableAutoConfiguration
 @RestController
-public class ShiroController {
+public class BaseController {
 
-    static final Logger LOG = LoggerFactory.getLogger(ShiroController.class);
-
-    @Resource
-    UserMapper userMapper;
+    static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
 
     @RequestMapping("/")
     public String index() {
         return "index";
     }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView loginForm() {
@@ -77,8 +71,7 @@ public class ShiroController {
         //验证是否登录成功
         if (currentUser.isAuthenticated()) {
             LOG.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-            List<User> list = userMapper.getUserList();
-            return new ModelAndView("user", "userList", list);
+            return new ModelAndView(new RedirectView("/user/list"));
         } else {
             token.clear();
             return new ModelAndView(new RedirectView("login"));

@@ -1,15 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Login In</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/boot/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/css/boot/ionicons.min.css"/>
+    <link rel="stylesheet" href="/css/boot/boot.min.css"/>
+    <link rel="stylesheet" href="/css/boot/blue.css"/>
+    <link rel="icon" type="image/png" href="/images/favicon.ico" sizes="32x32" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="/js/ie/html5shiv.min.js"></script>
+    <script src="/js/ie/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body>
-<h1>登录页面----${message}</h1>
-<form action="/login" method="post">
-    用户名:<input name="userName" id="userName"/>
-    密码:<input name="password" type="password"/>
-    <input type="submit"/>
-</form>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/"><b>Boot</b>Shiro</a>
+    </div>
+    <div class="login-box-body">
+        <p th:text="${message}" class="login-box-msg"></p>
+        <form action="/login" method="post">
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" name="userName" placeholder="UserName"/>
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" name="password" placeholder="Password"/>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            <input type="checkbox"/> Remember Me
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                </div>
+            </div>
+        </form>
+        <a href="###">I forgot my password</a><br/>
+        <a href="register.html" class="text-center">Register a new membership</a>
+    </div>
+</div>
+<script src="/js/jQuery/jquery.min.js"></script>
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<script src="/js/bootstrap/icheck.min.js"></script>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    });
+</script>
 </body>
 </html>
