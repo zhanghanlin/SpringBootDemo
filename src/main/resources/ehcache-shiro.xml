@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache updateCheck="false" name="shiroCache">
+    <!--
+        name:设置缓存的名称，用于标志缓存,惟一
+        defaultCache:默认的缓存配置信息,如果不加特殊说明,则所有对象按照此配置项处理
+        maxElementsInMemory:在内存中最大的对象数量
+        eternal:缓存中对象是否为永久的，如果是，超时设置将被忽略，对象从不过期
+        overflowToDisk:内存不足时，是否启用磁盘缓存
+        timeToIdleSeconds:缓存数据的钝化时间，也就是在一个元素消亡之前，两次访问时间的最大时间间隔值，这只能在元素不是永久驻留时有效，如果该值是 0 就意味着元素可以停顿无穷长的时间
+        timeToLiveSeconds:缓存数据的生存时间，也就是一个元素从构建到消亡的最大时间间隔值，这只能在元素不是永久驻留时有效，如果该值是0就意味着元素可以停顿无穷长的时间
+        diskPersistent:是否DiskStore在虚拟机启动时持久化。默认为false
+        diskExpiryThreadIntervalSeconds:运行disk终结线程的时间，默认为120秒
+     -->
     <defaultCache
             maxElementsInMemory="10000"
             eternal="false"
