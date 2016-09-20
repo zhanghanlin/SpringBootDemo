@@ -113,11 +113,12 @@ public class ShiroConfiguration {
 
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
         filterChainDefinitionManager.put("/logout", "logout");
-//        filterChainDefinitionManager.put("/user/**", "authc,roles[user]");
-//        filterChainDefinitionManager.put("/shop/**", "authc,roles[shop]");
-//        filterChainDefinitionManager.put("/admin/**", "authc,roles[admin]");
-        filterChainDefinitionManager.put("/user", "authc,roles[admin]");
-        filterChainDefinitionManager.put("/**", "anon");
+        filterChainDefinitionManager.put("/login", "anon");
+        filterChainDefinitionManager.put("/js/**", "anon");
+        filterChainDefinitionManager.put("/css/**", "anon");
+        filterChainDefinitionManager.put("/images/**", "anon");
+        filterChainDefinitionManager.put("/fonts/**", "anon");
+        filterChainDefinitionManager.put("/**", "authc,roles[admin]");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
 
         shiroFilterFactoryBean.setLoginUrl("/login");
