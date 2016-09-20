@@ -1,6 +1,7 @@
 package com.demo.boot.controller;
 
 import com.demo.boot.entity.User;
+import com.demo.boot.vo.Login;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -35,12 +36,13 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public ModelAndView login(Login login, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("login");
         }
-        String username = user.getUserName();
-        UsernamePasswordToken token = new UsernamePasswordToken(username, user.getPassword());
+        String username = login.getUserName();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, login.getPassword());
+        token.setRememberMe(login.isRememberMe());
         //获取当前的Subject
         Subject currentUser = SecurityUtils.getSubject();
         try {

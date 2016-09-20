@@ -8,7 +8,11 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +23,8 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfiguration {
+
+    final static Logger LOG = LoggerFactory.getLogger(ShiroConfiguration.class);
 
     /**
      * 这是个DestructionAwareBeanPostProcessor的子类
@@ -41,7 +47,9 @@ public class ShiroConfiguration {
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        //散列算法:这里使用MD5算法
         credentialsMatcher.setHashAlgorithmName("MD5");
+        //散列的次数,比如散列两次相当于md5(md5("")
         credentialsMatcher.setHashIterations(2);
         credentialsMatcher.setStoredCredentialsHexEncoded(true);
         return credentialsMatcher;
@@ -59,6 +67,34 @@ public class ShiroConfiguration {
         EhCacheManager em = new EhCacheManager();
         em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
         return em;
+    }
+
+    /**
+     * rememberMe Cookie
+     *
+     * @return
+     */
+    @Bean
+    public SimpleCookie rememberMeCookie() {
+        LOG.info("ShiroConfiguration.rememberMeCookie()");
+        //这个参数是cookie的名称,对应前端的checkbox的name = rememberMe
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        //记住我cookie生效时间30天 ,单位秒
+        simpleCookie.setMaxAge(30 * 60 * 60);
+        return simpleCookie;
+    }
+
+    /**
+     * rememberMe管理器
+     *
+     * @return
+     */
+    @Bean
+    public CookieRememberMeManager rememberMeManager() {
+        LOG.info("ShiroConfiguration.rememberMeManager()");
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        return cookieRememberMeManager;
     }
 
     /**
@@ -87,6 +123,7 @@ public class ShiroConfiguration {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(shiroRealm());
         manager.setCacheManager(ehCacheManager());
+        manager.setRememberMeManager(rememberMeManager());
         return manager;
     }
 
@@ -103,8 +140,12 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setSecurityManager(securityManager());
         Map<String, Filter> filters = new LinkedHashMap<>();
         LogoutFilter logoutFilter = new LogoutFilter();
+        //配置退出过滤器
         logoutFilter.setRedirectUrl("/login");
         filters.put("logout", logoutFilter);
+        //add anyRole
+        RolesAuthorizationFilter anyRolesFilter = new RolesAuthorizationFilter();
+        filters.put("anyRoles", anyRolesFilter);
         shiroFilterFactoryBean.setFilters(filters);
 
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
@@ -115,7 +156,7 @@ public class ShiroConfiguration {
         filterChainDefinitionManager.put("/css/**", "anon");
         filterChainDefinitionManager.put("/images/**", "anon");
         filterChainDefinitionManager.put("/fonts/**", "anon");
-        filterChainDefinitionManager.put("/**", "authc,roles[admin]");
+        filterChainDefinitionManager.put("/**", "authc,anyRoles[admin,normal_user]");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
 
         shiroFilterFactoryBean.setLoginUrl("/login");
