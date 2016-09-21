@@ -39,22 +39,18 @@ public class SysService {
      */
     @Transactional
     public void register(Register register) {
-        User user = new User();
-        user.setUserName(register.getUserName());
-        user.setPassword(new SimpleHash("md5", register.getPassword(), null, 2).toHex());
-        user.setDisplayName(register.getDisplayName());
-        userService.insert(user);
-        if (user.getId() <= 0) {
-            LOG.info("用户创建失败");
-            throw new RuntimeException("用户创建失败");
-        }
-        UserRole userRole = new UserRole();
-        userRole.setUserId(user.getId());
-        userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
-        userRoleService.insert(userRole);
-        if (userRole.getId() <= 0) {
-            LOG.info("用户角色关联失败");
-            throw new RuntimeException("用户角色关联失败");
+        try {
+            User user = new User();
+            user.setUserName(register.getUserName());
+            user.setPassword(new SimpleHash("md5", register.getPassword(), null, 2).toHex());
+            user.setDisplayName(register.getDisplayName());
+            userService.insert(user);
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getId());
+            userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
+            userRoleService.insert(userRole);
+        } catch (Exception e) {
+            throw new RuntimeException();
         }
     }
 

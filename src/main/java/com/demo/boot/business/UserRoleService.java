@@ -14,10 +14,18 @@ public class UserRoleService {
 
     /**
      * 写入用户角色关联关系
+     *
      * @param userRole
      * @return
      */
-    public int insert(UserRole userRole) {
-        return userRoleMapper.insert(userRole);
+    public void insert(UserRole userRole) {
+        try {
+            userRoleMapper.insert(userRole);
+            if (userRole.getId() <= 0) {
+                throw new RuntimeException("用户角色关联失败");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
     }
 }

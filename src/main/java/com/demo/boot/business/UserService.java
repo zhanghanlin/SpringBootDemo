@@ -30,8 +30,15 @@ public class UserService {
      * @param user
      * @return
      */
-    public int insert(User user) {
-        return userMapper.insert(user);
+    public void insert(User user) {
+        try {
+            userMapper.insert(user);
+            if (user.getId() <= 0) {
+                throw new RuntimeException("用户创建失败");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
     }
 
     /**
