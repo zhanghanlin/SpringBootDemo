@@ -96,11 +96,11 @@ public class SysController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(Register register, RedirectAttributes redirectAttributes) {
-        int res = sysService.register(register);
-        if (res > 0) {
+        try {
+            sysService.register(register);
             redirectAttributes.addFlashAttribute("message", "注册成功");
-        } else {
-            redirectAttributes.addFlashAttribute("message", "注册失败");
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("message", "注册失败" + e.getMessage());
         }
         return new ModelAndView(new RedirectView("login"));
     }

@@ -10,6 +10,7 @@ import com.demo.boot.vo.menu.MenuTree;
 import com.google.common.collect.Lists;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,20 +33,23 @@ public class SysService {
      * @param register
      * @return
      */
-    public int register(Register register) {
-        int res = 0;
+    @Transactional(noRollbackFor = Exception.class)
+    public void register(Register register) {
         User user = new User();
         user.setUserName(register.getUserName());
         user.setPassword(new SimpleHash("md5", register.getPassword(), null, 2).toHex());
         user.setDisplayName(register.getDisplayName());
         userService.insert(user);
-        if (user.getId() > 0) {
-            UserRole userRole = new UserRole();
-            userRole.setUserId(user.getId());
-            userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
-            res = userRoleService.insert(userRole);
+        if (user.getId() <= 0) {
+            throw new RuntimeException("用户创建失败");
         }
-        return res;
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getId());
+        userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
+        userRoleService.insert(userRole);
+        if (user.getId() <= 0) {
+            throw new RuntimeException("用户角色关联失败");
+        }
     }
 
     /**
