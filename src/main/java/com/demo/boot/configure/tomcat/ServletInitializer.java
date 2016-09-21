@@ -1,4 +1,4 @@
-package com.demo.boot.tomcat;
+package com.demo.boot.configure.tomcat;
 
 
 import com.demo.boot.Application;

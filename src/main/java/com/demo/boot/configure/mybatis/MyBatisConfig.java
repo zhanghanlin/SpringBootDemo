@@ -1,4 +1,4 @@
-package com.demo.boot.mybatis;
+package com.demo.boot.configure.mybatis;
 
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.plugin.Interceptor;

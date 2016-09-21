@@ -22,6 +22,8 @@ public class Permission {
 
     private String icon;
 
+    private String target;
+
     private Integer isShow;
 
     private Integer isSys;
@@ -76,7 +78,7 @@ public class Permission {
         return parent;
     }
 
-    public void setParentId(Permission parent) {
+    public void setParent(Permission parent) {
         this.parent = parent;
     }
 
@@ -102,6 +104,14 @@ public class Permission {
 
     public void setIcon(String icon) {
         this.icon = icon == null ? null : icon.trim();
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     public Integer getIsShow() {

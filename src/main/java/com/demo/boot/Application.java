@@ -2,6 +2,7 @@ package com.demo.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -14,6 +15,8 @@ import javax.servlet.Filter;
 @RestController
 @EnableWebMvc
 @SpringBootApplication
+//spring能够扫描到我们自己编写的servlet和filter
+@ServletComponentScan
 public class Application extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {

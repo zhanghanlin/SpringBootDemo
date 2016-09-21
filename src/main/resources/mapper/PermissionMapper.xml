@@ -10,6 +10,7 @@
     <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
     <result column="link" property="link" jdbcType="VARCHAR" />
     <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
     <result column="is_show" property="isShow" jdbcType="CHAR" />
     <result column="is_sys" property="isSys" jdbcType="CHAR" />
     <result column="weight" property="weight" jdbcType="INTEGER" />
@@ -25,7 +26,7 @@
     </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    p.id, p.name, p.note, p.unique_key, p.parent_id AS 'parent.id', p.parent_ids, p.link, p.icon, p.is_show,
+    p.id, p.name, p.note, p.unique_key, p.parent_id AS 'parent.id', p.parent_ids, p.link, p.icon, p.target, p.is_show,
     p.is_sys, p.weight, p.status, p.created_at, p.created_by, p.changed_at, p.changed_by, p.version, pp.name AS 'parent.name'
   </sql>
   <sql id="menuJoins">

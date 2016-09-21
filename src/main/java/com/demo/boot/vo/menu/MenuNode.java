@@ -10,6 +10,7 @@ public class MenuNode {
     private String name;
     private Integer parentId;
     private String link;
+    private String target;
     private int level;
     private List<MenuNode> nodes;
 
@@ -18,6 +19,7 @@ public class MenuNode {
         this.name = m.getName();
         this.parentId = m.getParentId();
         this.link = m.getLink();
+        this.target = m.getTarget();
     }
 
     /**
@@ -59,6 +61,14 @@ public class MenuNode {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     public int getLevel() {

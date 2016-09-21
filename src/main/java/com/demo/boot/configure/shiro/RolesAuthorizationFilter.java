@@ -1,4 +1,4 @@
-package com.demo.boot.shiro;
+package com.demo.boot.configure.shiro;
 
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;

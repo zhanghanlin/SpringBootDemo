@@ -1,4 +1,4 @@
-package com.demo.boot.shiro;
+package com.demo.boot.configure.shiro;
 
 import com.demo.boot.business.PermissionService;
 import com.demo.boot.business.UserService;
