@@ -88,12 +88,13 @@ CREATE TABLE `m_permission` (
   COMMENT '所有父级Id',
   `link`       VARCHAR(200) COMMENT '权限对应的功能连接',
   `icon`       VARCHAR(100) COMMENT '图标',
-  `is_show`    INT(1)       NOT NULL
+  `target`     VARCHAR(100) COMMENT '打开方式',
+  `is_show`    INT(1)        NOT NULL
   COMMENT '是否在菜单中显示',
-  `is_sys`     INT(1)       NOT NULL DEFAULT 1
+  `is_sys`     INT(1)        NOT NULL DEFAULT 1
   COMMENT '是否系统菜单',
   `weight`     INT(3) COMMENT '权重,排序使用',
-  `status`     INT(1)       NOT NULL DEFAULT 0
+  `status`     INT(1)        NOT NULL DEFAULT 0
   COMMENT '状态,默认正常',
   `created_at` DATETIME      NOT NULL DEFAULT NOW()
   COMMENT '创建时间',
@@ -112,8 +113,18 @@ CREATE TABLE `m_permission` (
   AUTO_INCREMENT = 4
   DEFAULT CHARSET = utf8;
 
-INSERT INTO m_permission (name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
-VALUES ('BOOT', '主权限菜单', 'boot', 0, '0,', '', '', 1, 1, 1);
+INSERT INTO boot.m_permission (name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('系统设置', '系统设置', 'sys', 0, '0,', NULL, NULL, 1, 1, 2);
+INSERT INTO boot.m_permission (name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('用户信息', '用户信息', 'sys:user', 5, '0,5', '/user/list', NULL, 1, 1, 3);
+INSERT INTO boot.m_permission (name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('权限信息', '权限信息', 'sys:perm', 5, '0,5', '/perm/list', NULL, 1, 1, 4);
+INSERT INTO boot.m_permission (name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('角色信息', '角色信息', 'sys:role', 5, '0,5', '/role/list', NULL, 1, 1, 5);
+INSERT INTO boot.m_permission (name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('日志信息', '日志信息', 'sys:log', 0, '0,', NULL, NULL, 1, 1, 6, 0);
+INSERT INTO boot.m_permission (name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('数据库监控', '数据库监控', 'sys:log:datasource', 9, '0,9', '/druid/datasource.html', NULL, 1, 1, 7);
 
 -- ----------------------------
 -- Table structure for `template`

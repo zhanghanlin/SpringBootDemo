@@ -433,8 +433,12 @@ function _init() {
                 $this.parent("li").addClass('active');
                 var link = $this.attr('link');
                 if (link) {
-                    $('.content-wrapper > .content').html('');
-                    $('.content-wrapper > .content').load($this.attr('link'));
+                    if ($this.attr('target') == '_blank') {
+                        $this.attr('href',link)
+                    } else {
+                        $('.content-wrapper > .content').html('');
+                        $('.content-wrapper > .content').load(link);
+                    }
                 }
             }
         });
