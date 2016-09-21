@@ -1,5 +1,7 @@
 package com.demo.boot.vo;
 
+import com.demo.boot.utils.StringUtils;
+
 /**
  * 注册使用Vo
  */
@@ -43,5 +45,12 @@ public class Register {
 
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
+    }
+
+    public boolean isEmpty() {
+        return StringUtils.isBlank(displayName)
+                || StringUtils.isBlank(userName)
+                || StringUtils.isBlank(password)
+                || StringUtils.isBlank(rePassword);
     }
 }

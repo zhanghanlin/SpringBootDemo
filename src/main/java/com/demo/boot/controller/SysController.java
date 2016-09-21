@@ -90,19 +90,25 @@ public class SysController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView registerForm() {
-        return new ModelAndView("register");
+    public ModelAndView registerForm(Register register) {
+        return new ModelAndView("register", "register", register);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(Register register, RedirectAttributes redirectAttributes) {
         try {
-            sysService.register(register);
-            redirectAttributes.addFlashAttribute("message", "注册成功");
+            if (register.isEmpty()) {
+                redirectAttributes.addFlashAttribute("register", register);
+                redirectAttributes.addFlashAttribute("message", "信息填写不完整");
+            } else {
+                sysService.register(register);
+                redirectAttributes.addFlashAttribute("message", "注册成功");
+                return new ModelAndView(new RedirectView("login"));
+            }
         } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("message", "注册失败" + e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "注册失败");
         }
-        return new ModelAndView(new RedirectView("login"));
+        return new ModelAndView(new RedirectView("register"));
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
