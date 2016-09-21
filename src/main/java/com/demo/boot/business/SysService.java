@@ -41,7 +41,7 @@ public class SysService {
         userService.insert(user);
         if (user.getId() > 0) {
             UserRole userRole = new UserRole();
-            userRole.setUserId(res);
+            userRole.setUserId(user.getId());
             userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
             res = userRoleService.insert(userRole);
         }
