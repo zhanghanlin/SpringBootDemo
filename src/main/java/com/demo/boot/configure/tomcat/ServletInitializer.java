@@ -1,6 +1,5 @@
 package com.demo.boot.configure.tomcat;
 
-
 import com.demo.boot.Application;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;

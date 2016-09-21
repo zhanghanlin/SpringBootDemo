@@ -4,7 +4,7 @@ $(function () {
             $('#list').DataTable({
                 bPaginate: true,// 分页按钮
                 lengthChange: true,  //修改每页数量
-                searching: true,  //搜索功能
+                searching: false,  //搜索功能
                 order: [[0, 'DESC']],   //默认排序字段
                 info: true,   //显示数据信息 第几页,总共几页等等
                 autoWidth: false, //是否固定宽度

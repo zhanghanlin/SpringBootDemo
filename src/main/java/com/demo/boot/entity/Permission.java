@@ -2,11 +2,9 @@ package com.demo.boot.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.Date;
 import java.util.List;
 
-public class Permission {
-    private Integer id;
+public class Permission extends BaseEntity {
 
     private String name;
 
@@ -31,24 +29,6 @@ public class Permission {
     private Integer weight;
 
     private Integer status;
-
-    private Date createdAt;
-
-    private String createdBy;
-
-    private Date changedAt;
-
-    private String changedBy;
-
-    private Integer version;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -144,46 +124,6 @@ public class Permission {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy == null ? null : createdBy.trim();
-    }
-
-    public Date getChangedAt() {
-        return changedAt;
-    }
-
-    public void setChangedAt(Date changedAt) {
-        this.changedAt = changedAt;
-    }
-
-    public String getChangedBy() {
-        return changedBy;
-    }
-
-    public void setChangedBy(String changedBy) {
-        this.changedBy = changedBy == null ? null : changedBy.trim();
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     @JsonIgnore
