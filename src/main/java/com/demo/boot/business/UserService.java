@@ -6,6 +6,8 @@ import com.demo.boot.mapper.RoleMapper;
 import com.demo.boot.mapper.UserMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Service
 public class UserService {
+
+    static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     @Resource
     UserMapper userMapper;

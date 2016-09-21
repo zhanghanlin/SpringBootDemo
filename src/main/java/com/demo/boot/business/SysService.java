@@ -9,6 +9,8 @@ import com.demo.boot.vo.menu.MenuNode;
 import com.demo.boot.vo.menu.MenuTree;
 import com.google.common.collect.Lists;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,8 @@ import java.util.List;
 
 @Service
 public class SysService {
+
+    static final Logger LOG = LoggerFactory.getLogger(SysService.class);
 
     @Resource
     PermissionService permissionService;
@@ -33,7 +37,7 @@ public class SysService {
      * @param register
      * @return
      */
-    @Transactional(noRollbackFor = Exception.class)
+    @Transactional
     public void register(Register register) {
         User user = new User();
         user.setUserName(register.getUserName());
@@ -41,13 +45,15 @@ public class SysService {
         user.setDisplayName(register.getDisplayName());
         userService.insert(user);
         if (user.getId() <= 0) {
+            LOG.info("用户创建失败");
             throw new RuntimeException("用户创建失败");
         }
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getId());
         userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
         userRoleService.insert(userRole);
-        if (user.getId() <= 0) {
+        if (userRole.getId() <= 0) {
+            LOG.info("用户角色关联失败");
             throw new RuntimeException("用户角色关联失败");
         }
     }
