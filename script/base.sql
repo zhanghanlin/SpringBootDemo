@@ -8,11 +8,11 @@ CREATE TABLE `m_user` (
   COMMENT '登录名',
   `password`     VARCHAR(100) NOT NULL
   COMMENT '密码',
-  `display_name` VARCHAR(100) NOT NULL
+  `display_name` VARCHAR(100)
   COMMENT '姓名',
-  `email`        VARCHAR(100) NOT NULL
+  `email`        VARCHAR(100)
   COMMENT '邮箱',
-  `phone`        VARCHAR(100) NOT NULL
+  `phone`        VARCHAR(100)
   COMMENT '手机号',
   `status`       INT(3)       NOT NULL DEFAULT '0'
   COMMENT '状态,默认正常',

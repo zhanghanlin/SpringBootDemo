@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login In</title>
+    <title>Register</title>
     <div th:substituteby="/common/include"></div>
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
-    <div class="login-logo">
+<div class="register-box">
+    <div class="register-logo">
         <a href="/"><b>Boot</b>Shiro</a>
     </div>
-    <div class="login-box-body">
-        <p th:text="${message}" class="login-box-msg"></p>
-        <form action="/login" method="post">
+
+    <div class="register-box-body">
+        <p class="login-box-msg">Register a new membership</p>
+        <form action="/register" method="post">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" name="userName" placeholder="UserName"/>
+                <input type="text" class="form-control" name="displayName" placeholder="Full name"/>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" name="userName" placeholder="User Name"/>
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
                 <input type="password" class="form-control" name="password" placeholder="Password"/>
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" name="rePassword" placeholder="Retype password"/>
+                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+            </div>
             <div class="row">
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox" name="rememberMe"/> Remember Me
+                            <input type="checkbox"/> I agree to the <a href="#">terms</a>
                         </label>
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
                 </div>
             </div>
         </form>
-        <a href="###">I forgot my password</a><br/>
-        <a href="/register" class="text-center">Register a new membership</a>
+        <a href="/login" class="text-center">I already have a membership</a>
     </div>
 </div>
 <script src="/js/bootstrap/icheck.min.js"></script>

@@ -21,6 +21,16 @@ public class UserService {
     RoleMapper roleMapper;
 
     /**
+     * 新增用户
+     *
+     * @param user
+     * @return
+     */
+    public int insert(User user) {
+        return userMapper.insert(user);
+    }
+
+    /**
      * 根据ID
      *
      * @param id

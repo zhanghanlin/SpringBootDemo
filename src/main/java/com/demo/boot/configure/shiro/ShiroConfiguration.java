@@ -42,7 +42,7 @@ public class ShiroConfiguration {
      */
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
-        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        HashedCredentialsMatcher credentialsMatcher = new LimitRetryHashedMatcher();
         //散列算法:这里使用MD5算法
         credentialsMatcher.setHashAlgorithmName("MD5");
         //散列的次数,比如散列两次相当于md5(md5("")
@@ -145,6 +145,7 @@ public class ShiroConfiguration {
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
         filterChainDefinitionManager.put("/logout", "logout");
         filterChainDefinitionManager.put("/login", "anon");
+        filterChainDefinitionManager.put("/register", "anon");
         filterChainDefinitionManager.put("/403", "anon");
         filterChainDefinitionManager.put("/js/**", "anon");
         filterChainDefinitionManager.put("/css/**", "anon");

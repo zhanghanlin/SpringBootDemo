@@ -3,6 +3,7 @@ package com.demo.boot.controller;
 import com.demo.boot.business.SysService;
 import com.demo.boot.entity.User;
 import com.demo.boot.vo.Login;
+import com.demo.boot.vo.Register;
 import com.demo.boot.vo.menu.MenuNode;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -23,9 +24,9 @@ import java.util.List;
 
 @EnableAutoConfiguration
 @RestController
-public class BaseController {
+public class SysController {
 
-    static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
+    static final Logger LOG = LoggerFactory.getLogger(SysController.class);
 
     @Resource
     SysService sysService;
@@ -86,6 +87,22 @@ public class BaseController {
             token.clear();
             return new ModelAndView(new RedirectView("login"));
         }
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView registerForm() {
+        return new ModelAndView("register");
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ModelAndView register(Register register, RedirectAttributes redirectAttributes) {
+        int res = sysService.register(register);
+        if (res > 0) {
+            redirectAttributes.addFlashAttribute("message", "注册成功");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "注册失败");
+        }
+        return new ModelAndView(new RedirectView("login"));
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

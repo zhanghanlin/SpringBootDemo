@@ -40,7 +40,7 @@
     delete from m_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.demo.boot.entity.User" >
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.demo.boot.entity.User" >
     insert into m_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
