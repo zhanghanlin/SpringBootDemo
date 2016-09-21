@@ -20,7 +20,7 @@ public class PermissionController {
     @Resource
     PermissionService permissionService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView user() {
         List<Permission> list = Lists.newArrayList();
         List<Permission> sourceList = permissionService.getAll();

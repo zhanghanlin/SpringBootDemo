@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<link rel="stylesheet" href="/css/treeTable/treeTable.min.css"/>
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">权限信息</h3>
@@ -15,11 +19,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td colspan="5">Loading data from server</td>
+            <tr th:each="p,iterStat : ${perm}" th:id="${p.id}" th:attr="pid=${p.parent.id}">
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.link}"></td>
+                <td th:text="${p.weight}"></td>
+                <td th:text="${p.isShow}"></td>
+                <td th:text="${p.isSys}"></td>
+                <td th:text="${p.uniqueKey}"></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
 <script src="/js/jQuery/jquery.treeTable.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#list").treeTable({expandLevel: 3}).show();
+    });
+</script>
+</body>
+</html>
