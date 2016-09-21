@@ -1,10 +1,8 @@
 package com.demo.boot.shiro;
 
 import com.demo.boot.business.PermissionService;
-import com.demo.boot.business.RoleService;
 import com.demo.boot.business.UserService;
 import com.demo.boot.entity.Permission;
-import com.demo.boot.entity.Role;
 import com.demo.boot.entity.User;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -29,9 +27,6 @@ public class ShiroRealm extends AuthorizingRealm {
     UserService userService;
 
     @Resource
-    RoleService roleService;
-
-    @Resource
     PermissionService permissionService;
 
     /**
@@ -51,19 +46,14 @@ public class ShiroRealm extends AuthorizingRealm {
         if (user != null) {
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            Set<String> roleNames = new HashSet<>();
             Set<String> permissionNames = new HashSet<>();
             //用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
-            List<Role> roleList = roleService.getRoleByUser(user.getId());
             List<Permission> permissionList = permissionService.getPermissionByUser(user.getId());
-            for (Role role : roleList) {
-                roleNames.add(role.getUniqueKey());
-            }
             for (Permission permission : permissionList) {
                 permissionNames.add(permission.getUniqueKey());
             }
             //用户的角色集合
-            info.setRoles(roleNames);
+            info.setRoles(user.getRolesKey());
             //用户的权限集合
             info.setStringPermissions(permissionNames);
             return info;

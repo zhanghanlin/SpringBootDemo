@@ -1,6 +1,8 @@
 package com.demo.boot.business;
 
+import com.demo.boot.entity.Role;
 import com.demo.boot.entity.User;
+import com.demo.boot.mapper.RoleMapper;
 import com.demo.boot.mapper.UserMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -15,6 +17,22 @@ public class UserService {
     @Resource
     UserMapper userMapper;
 
+    @Resource
+    RoleMapper roleMapper;
+
+    /**
+     * 根据ID
+     *
+     * @param id
+     * @return
+     */
+    public User get(Integer id) {
+        User user = userMapper.get(id);
+        List<Role> roles = roleMapper.getRoleByUser(user.getId());
+        user.setRoles(roles);
+        return user;
+    }
+
     /**
      * 根据用户名查询用户
      *
@@ -22,7 +40,10 @@ public class UserService {
      * @return
      */
     public User getByUserName(String userName) {
-        return userMapper.getByUserName(userName);
+        User user = userMapper.getByUserName(userName);
+        List<Role> roles = roleMapper.getRoleByUser(user.getId());
+        user.setRoles(roles);
+        return user;
     }
 
     /**

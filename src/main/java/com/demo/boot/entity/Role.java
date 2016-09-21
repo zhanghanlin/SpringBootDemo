@@ -1,6 +1,11 @@
 package com.demo.boot.entity;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 public class Role {
     private Integer id;
@@ -22,6 +27,8 @@ public class Role {
     private String changedBy;
 
     private Integer version;
+
+    private List<Permission> permissions = Lists.newArrayList();
 
     public Integer getId() {
         return id;
@@ -101,5 +108,21 @@ public class Role {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    public Set<String> getPermissionsName() {
+        Set<String> set = Sets.newHashSet();
+        for (int i = 0; i < permissions.size(); i++) {
+            set.add(permissions.get(i).getUniqueKey());
+        }
+        return set;
     }
 }
