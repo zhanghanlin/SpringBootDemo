@@ -98,7 +98,16 @@ public class BaseController {
 
     @RequestMapping("/403")
     public ModelAndView unauthorizedRole() {
-        LOG.info("------没有权限-------");
         return new ModelAndView("error/403");
+    }
+
+    @RequestMapping("/404")
+    public ModelAndView pageNotFound() {
+        return new ModelAndView("error/404");
+    }
+
+    @RequestMapping("/500")
+    public ModelAndView errorPage() {
+        return new ModelAndView("error/500");
     }
 }
