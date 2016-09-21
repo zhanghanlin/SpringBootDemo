@@ -1,5 +1,5 @@
 $(function () {
-    var userList = {
+    var roleTable = {
         table: function () {
             $('#list').DataTable({
                 bPaginate: true,// 分页按钮
@@ -15,13 +15,13 @@ $(function () {
                 bSortCellsTop: true,
                 bSortClasses: true,
                 ajax: {
-                    url: '/user/api/list'
+                    url: '/role/api/list'
                 },
                 columns: [
                     {data: 'id'},
-                    {data: 'userName'},
-                    {data: 'email'},
-                    {data: 'displayName'},
+                    {data: 'name'},
+                    {data: 'note'},
+                    {data: 'uniqueKey'},
                     {data: 'status'},
                 ],
                 select: true,
@@ -34,5 +34,5 @@ $(function () {
             });
         }
     };
-    userList.table();
+    roleTable.table();
 });

@@ -13,5 +13,7 @@ public interface RoleMapper {
 
     List<Role> getRoleByUser(Integer id);
 
+    List<Role> getAll();
+
     int update(Role record);
 }

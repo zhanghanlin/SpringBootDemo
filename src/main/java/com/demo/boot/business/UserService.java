@@ -41,7 +41,7 @@ public class UserService {
      * @param pageSize
      * @return
      */
-    public Page<User> getAllUserByPage(int pageNo, int pageSize, String orderBy) {
+    public Page<User> getAllByPage(int pageNo, int pageSize, String orderBy) {
         Page<User> page = PageHelper.startPage(pageNo, pageSize, orderBy);
         userMapper.getAll();
         return page;

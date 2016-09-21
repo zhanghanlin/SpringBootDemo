@@ -23,11 +23,16 @@
     from m_role r
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from m_role r
+  </select>
   <select id="getRoleByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
-    from m_role r,m_user_role ur
-    where r.id = ur.role_id AND ur.user_id = #{id,jdbcType=INTEGER}
+    from m_role r
+    JOIN m_user_role ur ON ur.role_id = r.id AND ur.user_id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="delete" parameterType="java.lang.Integer" >
     delete from m_role
