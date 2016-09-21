@@ -1,6 +1,6 @@
 package com.demo.boot.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 import java.util.List;
@@ -176,7 +176,7 @@ public class Permission {
         this.version = version;
     }
 
-    @JSONField(serialize = false)
+    @JsonIgnore
     public static void sortList(List<Permission> list, List<Permission> sourceList, Integer parentId, boolean cascade) {
         for (int i = 0; i < sourceList.size(); i++) {
             Permission e = sourceList.get(i);
@@ -198,8 +198,13 @@ public class Permission {
         }
     }
 
-    @JSONField(serialize = false)
+    @JsonIgnore
     public static Integer getRootId() {
         return 0;
+    }
+
+    @JsonIgnore
+    public Integer getParentId() {
+        return parent.getId();
     }
 }

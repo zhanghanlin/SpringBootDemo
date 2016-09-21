@@ -1,7 +1,9 @@
 package com.demo.boot.controller;
 
+import com.demo.boot.business.SysService;
 import com.demo.boot.entity.User;
 import com.demo.boot.vo.Login;
+import com.demo.boot.vo.menu.MenuNode;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -16,17 +18,23 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 @EnableAutoConfiguration
 @RestController
 public class BaseController {
 
     static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
 
+    @Resource
+    SysService sysService;
+
     @RequestMapping("/")
     public ModelAndView index() {
-        return new ModelAndView("index");
+        List<MenuNode> list = sysService.menu();
+        return new ModelAndView("index", "perms", list);
     }
-
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView loginForm() {

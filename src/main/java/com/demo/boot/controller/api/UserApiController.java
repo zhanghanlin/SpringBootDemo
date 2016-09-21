@@ -5,7 +5,6 @@ import com.demo.boot.entity.User;
 import com.demo.boot.utils.StringUtils;
 import com.demo.boot.vo.TablePage;
 import com.github.pagehelper.Page;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-@EnableAutoConfiguration
 @RestController
 @RequestMapping("user/api")
 public class UserApiController {

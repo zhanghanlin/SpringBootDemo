@@ -431,8 +431,11 @@ function _init() {
             if (checkElement.length == 0) {
                 $this.parents('ul').first().find('li.active').removeClass('active');
                 $this.parent("li").addClass('active');
-                $('.content-wrapper > .content').html('');
-                $('.content-wrapper > .content').load($this.attr('link'));
+                var link = $this.attr('link');
+                if (link) {
+                    $('.content-wrapper > .content').html('');
+                    $('.content-wrapper > .content').load($this.attr('link'));
+                }
             }
         });
     };

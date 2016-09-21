@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<body>
 <aside class="main-sidebar">
     <section class="sidebar">
         <div class="user-panel">
@@ -12,21 +15,25 @@
             </div>
         </div>
         <ul class="sidebar-menu">
-            <li class="header">MAIN NAVIGATION</li>
-            <li class="treeview">
+            <li class="header">BOOT</li>
+            <li class="treeview" th:each="p,s : ${perms}">
                 <a href="#">
                     <i class="fa fa-dashboard"></i>
-                    <span>Dashboard</span>
-                    <span class="pull-right-container">
+                    <span th:text="${p.name}"></span>
+                    <span class="pull-right-container" th:if="${p.hasNode()}">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="javascript:;" link="/user/list"><i class="fa fa-circle-o"></i>User List</a></li>
-                    <li><a href="javascript:;" link="/perm/list"><i class="fa fa-circle-o"></i>Perm List</a></li>
-                    <li><a href="javascript:;" link="/role/list"><i class="fa fa-circle-o"></i>Role List</a></li>
+                <ul class="treeview-menu" th:if="${p.hasNode()}">
+                    <li th:each="p2,s2 : ${p.nodes}">
+                        <a href="javascript:;" th:attr="link=${p2.link}"
+                           th:utext="${p2.name}"><i class='fa fa-circle-o'></i>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
     </section>
 </aside>
+</body>
+</html>
