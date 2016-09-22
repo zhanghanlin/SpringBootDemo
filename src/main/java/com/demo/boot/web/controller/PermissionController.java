@@ -3,6 +3,7 @@ package com.demo.boot.web.controller;
 import com.demo.boot.business.PermissionService;
 import com.demo.boot.entity.Permission;
 import com.google.common.collect.Lists;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,8 @@ public class PermissionController {
 
     @Resource
     PermissionService permissionService;
-
+    
+    @RequiresPermissions("sys:perm")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
         List<Permission> list = Lists.newArrayList();

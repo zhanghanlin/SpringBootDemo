@@ -3,6 +3,8 @@ package com.demo.boot.utils;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
+import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 
 /**
  * ehcache的缓存工具类
@@ -86,9 +88,12 @@ public class CacheUtils {
     private static Cache getCache(String cacheName) {
         Cache cache = cacheManager.getCache(cacheName);
         if (cache == null) {
-            cacheManager.addCache(cacheName);
-            cache = cacheManager.getCache(cacheName);
-            cache.getCacheConfiguration().setEternal(true);
+            //创建ehcache缓存，创建之后的有效期是1小时
+            cache = new Cache(new CacheConfiguration(cacheName, 5000)
+                    .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.FIFO)
+                    .timeoutMillis(300)
+                    .timeToLiveSeconds(60 * 60));
+            cacheManager.addCache(cache);
         }
         return cache;
     }
