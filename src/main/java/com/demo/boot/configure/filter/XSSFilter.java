@@ -1,4 +1,4 @@
-package com.demo.boot.web.filter;
+package com.demo.boot.configure.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

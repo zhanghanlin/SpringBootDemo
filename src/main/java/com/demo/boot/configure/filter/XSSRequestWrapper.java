@@ -1,4 +1,4 @@
-package com.demo.boot.web.filter;
+package com.demo.boot.configure.filter;
 
 import org.springframework.web.util.HtmlUtils;
 

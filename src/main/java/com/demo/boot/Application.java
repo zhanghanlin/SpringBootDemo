@@ -1,9 +1,9 @@
 package com.demo.boot;
 
-import com.demo.boot.configure.boot.listener.ApplicationListenerEnvironmentPrepared;
-import com.demo.boot.configure.boot.listener.ApplicationListenerFailed;
-import com.demo.boot.configure.boot.listener.ApplicationListenerPrepared;
-import com.demo.boot.configure.boot.listener.ApplicationListenerStarted;
+import com.demo.boot.configure.listener.ApplicationListenerEnvironmentPrepared;
+import com.demo.boot.configure.listener.ApplicationListenerFailed;
+import com.demo.boot.configure.listener.ApplicationListenerPrepared;
+import com.demo.boot.configure.listener.ApplicationListenerStarted;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

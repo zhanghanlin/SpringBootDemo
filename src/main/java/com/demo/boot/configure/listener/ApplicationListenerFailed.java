@@ -1,4 +1,4 @@
-package com.demo.boot.configure.boot.listener;
+package com.demo.boot.configure.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

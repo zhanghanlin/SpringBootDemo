@@ -1,5 +1,7 @@
-package com.demo.boot.configure.boot.listener;
+package com.demo.boot.configure.listener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -11,9 +13,12 @@ import org.springframework.context.ApplicationListener;
  */
 public class ApplicationListenerStarted implements ApplicationListener<ApplicationStartedEvent> {
 
+    static final Logger LOG = LoggerFactory.getLogger(ApplicationListenerStarted.class);
+
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
         SpringApplication app = event.getSpringApplication();
         app.setBannerMode(Banner.Mode.OFF);// 不显示banner信息
+        LOG.info("ApplicationListenerStarted");
     }
 }
