@@ -4,11 +4,12 @@ import com.demo.boot.dict.RoleEnum;
 import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.User;
 import com.demo.boot.entity.UserRole;
+import com.demo.boot.utils.HashPassword;
+import com.demo.boot.utils.IdGen;
 import com.demo.boot.web.vo.Register;
 import com.demo.boot.web.vo.menu.MenuNode;
 import com.demo.boot.web.vo.menu.MenuTree;
 import com.google.common.collect.Lists;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -41,11 +42,13 @@ public class SysService {
     public void register(Register register) {
         try {
             User user = new User();
+            user.setId(IdGen.uuid());
             user.setUserName(register.getUserName());
-            user.setPassword(new SimpleHash("md5", register.getPassword(), null, 2).toHex());
+            user.setPassword(HashPassword.pwdHash(register.getPassword()));
             user.setDisplayName(register.getDisplayName());
             userService.insert(user);
             UserRole userRole = new UserRole();
+            userRole.setId(IdGen.uuid());
             userRole.setUserId(user.getId());
             userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
             userRoleService.insert(userRole);
