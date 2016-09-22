@@ -18,7 +18,6 @@ $(function () {
                     url: '/user/api/list'
                 },
                 columns: [
-                    {data: 'id'},
                     {data: 'userName'},
                     {data: 'email'},
                     {data: 'displayName'},

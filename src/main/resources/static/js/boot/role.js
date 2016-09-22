@@ -18,7 +18,6 @@ $(function () {
                     url: '/role/api/list'
                 },
                 columns: [
-                    {data: 'id'},
                     {data: 'name'},
                     {data: 'note'},
                     {data: 'uniqueKey'},

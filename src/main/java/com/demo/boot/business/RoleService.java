@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class RoleService {
@@ -23,5 +24,19 @@ public class RoleService {
         Page<Role> page = PageHelper.startPage(pageNo, pageSize, orderBy);
         roleMapper.getAll();
         return page;
+    }
+
+    /**
+     * 根据用户Id查询角色
+     *
+     * @param userId
+     * @return
+     */
+    public List<Role> getRoleByUser(String userId) {
+        return roleMapper.getRoleByUser(userId);
+    }
+
+    public List<Role> getAll() {
+        return roleMapper.getAll();
     }
 }

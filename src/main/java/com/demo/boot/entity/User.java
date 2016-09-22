@@ -1,5 +1,6 @@
 package com.demo.boot.entity;
 
+import com.demo.boot.dict.RoleEnum;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -84,5 +85,14 @@ public class User extends BaseEntity {
             set.add(roles.get(i).getUniqueKey());
         }
         return set;
+    }
+
+    /**
+     * 判断是否Admin
+     *
+     * @return
+     */
+    public boolean isAdmin() {
+        return getRolesKey().contains(RoleEnum.ADMIN.getKey());
     }
 }

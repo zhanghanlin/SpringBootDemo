@@ -12,6 +12,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import javax.servlet.Filter;
 
+import static com.demo.boot.dict.Boot.ENCODE;
+
 /**
  * WebMVC 相关配置
  */
@@ -37,7 +39,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public Filter characterEncodingFilter() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setEncoding(ENCODE);
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }

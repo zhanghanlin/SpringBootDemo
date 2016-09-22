@@ -2,6 +2,8 @@ package com.demo.boot.web.controller;
 
 import com.demo.boot.business.SysService;
 import com.demo.boot.entity.User;
+import com.demo.boot.utils.CacheUtils;
+import com.demo.boot.utils.UserUtils;
 import com.demo.boot.web.vo.Login;
 import com.demo.boot.web.vo.Register;
 import com.demo.boot.web.vo.menu.MenuNode;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+import static com.demo.boot.dict.Boot.LOGIN_FAIL_COUNT_KEY;
 
 
 @RestController
@@ -81,6 +85,7 @@ public class SysController {
         //验证是否登录成功
         if (currentUser.isAuthenticated()) {
             LOG.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
+            CacheUtils.remove(LOGIN_FAIL_COUNT_KEY + username);
             return new ModelAndView(new RedirectView("/"));
         } else {
             token.clear();
@@ -112,6 +117,7 @@ public class SysController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView logout(RedirectAttributes redirectAttributes) {
+        UserUtils.clearCache();
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();
         redirectAttributes.addFlashAttribute("message", "您已安全退出");

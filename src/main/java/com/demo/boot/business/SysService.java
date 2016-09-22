@@ -5,7 +5,7 @@ import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.User;
 import com.demo.boot.entity.UserRole;
 import com.demo.boot.utils.HashPassword;
-import com.demo.boot.utils.IdGen;
+import com.demo.boot.utils.UserUtils;
 import com.demo.boot.web.vo.Register;
 import com.demo.boot.web.vo.menu.MenuNode;
 import com.demo.boot.web.vo.menu.MenuTree;
@@ -61,7 +61,7 @@ public class SysService {
      * @return
      */
     public List<MenuNode> menu() {
-        List<Permission> perms = permissionService.getAll();
+        List<Permission> perms = UserUtils.getPerms();
         List<MenuNode> nodes = Lists.newArrayList();
         for (Permission p : perms) {
             MenuNode node = new MenuNode(p);
