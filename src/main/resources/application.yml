@@ -52,3 +52,6 @@ logging:
       apache: WARN
       hibernate: WARN
       thymeleaf: WARN
+    net:
+      sf:
+        ehcache: WARN

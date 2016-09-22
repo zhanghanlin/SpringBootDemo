@@ -1,4 +1,4 @@
-package com.demo.boot.configure;
+package com.demo.boot.configure.boot;
 
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;

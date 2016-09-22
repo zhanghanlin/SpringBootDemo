@@ -1,9 +1,9 @@
-package com.demo.boot.controller.api;
+package com.demo.boot.web.controller.api;
 
 import com.demo.boot.business.RoleService;
 import com.demo.boot.entity.Role;
 import com.demo.boot.utils.StringUtils;
-import com.demo.boot.vo.TablePage;
+import com.demo.boot.web.vo.TablePage;
 import com.github.pagehelper.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

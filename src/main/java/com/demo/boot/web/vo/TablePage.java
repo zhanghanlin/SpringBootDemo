@@ -1,4 +1,4 @@
-package com.demo.boot.vo;
+package com.demo.boot.web.vo;
 
 import java.io.Serializable;
 import java.util.List;

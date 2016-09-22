@@ -1,16 +1,15 @@
-package com.demo.boot.controller;
+package com.demo.boot.web.controller;
 
 import com.demo.boot.business.SysService;
 import com.demo.boot.entity.User;
-import com.demo.boot.vo.Login;
-import com.demo.boot.vo.Register;
-import com.demo.boot.vo.menu.MenuNode;
+import com.demo.boot.web.vo.Login;
+import com.demo.boot.web.vo.Register;
+import com.demo.boot.web.vo.menu.MenuNode;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.annotation.Resource;
 import java.util.List;
 
-@EnableAutoConfiguration
+
 @RestController
 public class SysController {
 

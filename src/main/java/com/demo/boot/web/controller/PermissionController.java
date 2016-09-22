@@ -1,4 +1,4 @@
-package com.demo.boot.controller;
+package com.demo.boot.web.controller;
 
 import com.demo.boot.business.PermissionService;
 import com.demo.boot.entity.Permission;

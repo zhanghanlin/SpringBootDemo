@@ -1,4 +1,4 @@
-package com.demo.boot.vo.menu;
+package com.demo.boot.web.vo.menu;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.demo.boot.vo;
+package com.demo.boot.web.vo;
 
 public class Login {
     private String userName;

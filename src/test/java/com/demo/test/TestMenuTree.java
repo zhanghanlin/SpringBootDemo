@@ -1,7 +1,7 @@
 package com.demo.test;
 
 import com.demo.boot.business.SysService;
-import com.demo.boot.vo.menu.MenuNode;
+import com.demo.boot.web.vo.menu.MenuNode;
 import org.junit.Test;
 
 import javax.annotation.Resource;

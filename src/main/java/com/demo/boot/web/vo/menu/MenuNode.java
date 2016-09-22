@@ -1,4 +1,4 @@
-package com.demo.boot.vo.menu;
+package com.demo.boot.web.vo.menu;
 
 import com.demo.boot.entity.Permission;
 
