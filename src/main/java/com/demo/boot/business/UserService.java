@@ -4,6 +4,7 @@ import com.demo.boot.entity.Role;
 import com.demo.boot.entity.User;
 import com.demo.boot.mapper.RoleMapper;
 import com.demo.boot.mapper.UserMapper;
+import com.demo.boot.utils.IdGen;
 import com.demo.boot.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -33,6 +34,7 @@ public class UserService {
      */
     public void insert(User user) {
         try {
+            user.setId(IdGen.uuid());
             userMapper.insert(user);
             if (StringUtils.isBlank(user.getId())) {
                 throw new RuntimeException("用户创建失败");

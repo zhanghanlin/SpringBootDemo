@@ -42,13 +42,11 @@ public class SysService {
     public void register(Register register) {
         try {
             User user = new User();
-            user.setId(IdGen.uuid());
             user.setUserName(register.getUserName());
             user.setPassword(HashPassword.pwdHash(register.getPassword()));
             user.setDisplayName(register.getDisplayName());
             userService.insert(user);
             UserRole userRole = new UserRole();
-            userRole.setId(IdGen.uuid());
             userRole.setUserId(user.getId());
             userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
             userRoleService.insert(userRole);
