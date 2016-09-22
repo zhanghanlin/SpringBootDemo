@@ -4,18 +4,18 @@ package com.demo.boot.dict;
  * 角色枚举
  */
 public enum RoleEnum {
-    ADMIN(4), NORMAL_USER(5);
+    ADMIN("1"), NORMAL_USER("2");
 
     /**
      * 对应数据库角色Id
      */
-    private Integer id;
+    private String id;
 
-    RoleEnum(Integer id) {
+    RoleEnum(String id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 }

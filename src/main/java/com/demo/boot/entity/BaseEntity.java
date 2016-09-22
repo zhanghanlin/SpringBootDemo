@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class BaseEntity implements Serializable {
 
-    private Integer id;
+    private String id;
 
     private Date createdAt;
 
@@ -17,11 +17,11 @@ public class BaseEntity implements Serializable {
 
     private Integer version;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

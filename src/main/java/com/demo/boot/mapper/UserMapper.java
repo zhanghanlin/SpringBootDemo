@@ -5,11 +5,12 @@ import com.demo.boot.entity.User;
 import java.util.List;
 
 public interface UserMapper {
-    int delete(Integer id);
+
+    int delete(String id);
 
     int insert(User record);
 
-    User get(Integer id);
+    User get(String id);
 
     User getByUserName(String userName);
 

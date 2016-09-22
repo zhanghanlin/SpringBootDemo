@@ -5,13 +5,14 @@ import com.demo.boot.entity.Permission;
 import java.util.List;
 
 public interface PermissionMapper {
-    int delete(Integer id);
+
+    int delete(String id);
 
     int insert(Permission record);
 
-    Permission get(Integer id);
+    Permission get(String id);
 
-    List<Permission> getPermissionByUser(Integer id);
+    List<Permission> getPermissionByUser(String id);
 
     List<Permission> getAll();
 

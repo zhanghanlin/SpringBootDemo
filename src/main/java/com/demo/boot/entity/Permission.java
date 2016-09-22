@@ -127,7 +127,7 @@ public class Permission extends BaseEntity {
     }
 
     @JsonIgnore
-    public static void sortList(List<Permission> list, List<Permission> sourceList, Integer parentId, boolean cascade) {
+    public static void sortList(List<Permission> list, List<Permission> sourceList, String parentId, boolean cascade) {
         for (int i = 0; i < sourceList.size(); i++) {
             Permission e = sourceList.get(i);
             if (e.getParent() != null && e.getParent().getId() != null
@@ -149,12 +149,12 @@ public class Permission extends BaseEntity {
     }
 
     @JsonIgnore
-    public static Integer getRootId() {
-        return 0;
+    public static String getRootId() {
+        return "0";
     }
 
     @JsonIgnore
-    public Integer getParentId() {
+    public String getParentId() {
         return parent.getId();
     }
 }

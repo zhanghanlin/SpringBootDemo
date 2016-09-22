@@ -4,6 +4,7 @@ import com.demo.boot.entity.Role;
 import com.demo.boot.entity.User;
 import com.demo.boot.mapper.RoleMapper;
 import com.demo.boot.mapper.UserMapper;
+import com.demo.boot.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class UserService {
     public void insert(User user) {
         try {
             userMapper.insert(user);
-            if (user.getId() <= 0) {
+            if (StringUtils.isBlank(user.getId())) {
                 throw new RuntimeException("用户创建失败");
             }
         } catch (Exception e) {
@@ -47,7 +48,7 @@ public class UserService {
      * @param id
      * @return
      */
-    public User get(Integer id) {
+    public User get(String id) {
         User user = userMapper.get(id);
         List<Role> roles = roleMapper.getRoleByUser(user.getId());
         user.setRoles(roles);

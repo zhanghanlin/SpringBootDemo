@@ -2,6 +2,7 @@ package com.demo.boot.business;
 
 import com.demo.boot.entity.UserRole;
 import com.demo.boot.mapper.UserRoleMapper;
+import com.demo.boot.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,7 +22,7 @@ public class UserRoleService {
     public void insert(UserRole userRole) {
         try {
             userRoleMapper.insert(userRole);
-            if (userRole.getId() <= 0) {
+            if (StringUtils.isBlank(userRole.getId())) {
                 throw new RuntimeException("用户角色关联失败");
             }
         } catch (Exception e) {

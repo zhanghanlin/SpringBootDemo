@@ -6,9 +6,9 @@ import java.util.List;
 
 public class MenuNode {
 
-    private Integer id;
+    private String id;
     private String name;
-    private Integer parentId;
+    private String parentId;
     private String link;
     private String target;
     private int level;
@@ -31,11 +31,11 @@ public class MenuNode {
         return nodes != null && !nodes.isEmpty();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,11 +47,11 @@ public class MenuNode {
         this.name = name;
     }
 
-    public Integer getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 

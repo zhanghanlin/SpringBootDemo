@@ -1,23 +1,24 @@
 package com.demo.boot.entity;
 
 public class UserRole extends BaseEntity {
-    private Integer userId;
 
-    private Integer roleId;
+    private String userId;
 
-    public Integer getUserId() {
+    private String roleId;
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public Integer getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 }

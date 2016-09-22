@@ -19,7 +19,7 @@ public class PermissionService {
      * @param userId
      * @return
      */
-    public List<Permission> getPermissionByUser(Integer userId) {
+    public List<Permission> getPermissionByUser(String userId) {
         return permissionMapper.getPermissionByUser(userId);
     }
 
