@@ -1,6 +1,5 @@
 package com.demo.boot.configure;
 
-import org.apache.ibatis.javassist.NotFoundException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,15 +30,5 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     public ModelAndView unauthorizedException() {
         return new ModelAndView("error/403");
-    }
-
-    /**
-     * 404异常
-     *
-     * @return
-     */
-    @ExceptionHandler(NotFoundException.class)
-    public ModelAndView notFoundException() {
-        return new ModelAndView("error/404");
     }
 }
