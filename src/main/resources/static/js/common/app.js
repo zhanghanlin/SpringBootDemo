@@ -431,15 +431,6 @@ function _init() {
             if (checkElement.length == 0) {
                 $this.parents('ul').first().find('li.active').removeClass('active');
                 $this.parent("li").addClass('active');
-                var link = $this.attr('link');
-                if (link) {
-                    if ($this.attr('target') == '_blank') {
-                        $this.attr('href',link)
-                    } else {
-                        $('.content-wrapper > .content').html('');
-                        $('.content-wrapper > .content').load(link);
-                    }
-                }
             }
         });
     };

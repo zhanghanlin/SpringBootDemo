@@ -26,7 +26,8 @@
                 </a>
                 <ul class="treeview-menu" th:if="${p.hasNode()}">
                     <li th:each="p2,s2 : ${p.nodes}">
-                        <a href="javascript:;" th:attr="link=${p2.link}" th:target="${p2.target}"
+                        <a th:href="${p2.link}"
+                           th:target="${p2.target == null} ? 'mainFrame' : ${p2.target}"
                            th:utext="${p2.name}"><i class='fa fa-circle-o'></i>
                         </a>
                     </li>
