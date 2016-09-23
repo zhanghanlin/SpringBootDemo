@@ -33,7 +33,6 @@ public class UserController {
         return new ModelAndView("boot/userInput", "user", user);
     }
 
-
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView edit(User user, RedirectAttributes redirectAttributes) {
         try {
