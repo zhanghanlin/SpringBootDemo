@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("role")
 public class RoleController {
 
-    @RequiresPermissions("sys:role")
+    @RequiresPermissions("role:view")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
         return new ModelAndView("boot/role");

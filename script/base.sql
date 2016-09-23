@@ -106,17 +106,29 @@ CREATE TABLE `m_permission` (
   DEFAULT CHARSET = utf8;
 
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
-VALUES ('1', '系统设置', '系统设置', 'sys', 0, '0', NULL, NULL, 1, 1, 2);
+VALUES ('1', '系统设置', '系统设置', NULL, 0, '0', NULL, NULL, 1, 1, 2);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
-VALUES ('2', '用户信息', '用户信息', 'sys:user', 1, '0,1', '/user/list', NULL, 1, 1, 3);
+VALUES ('2', '用户信息', '用户信息', NULL, 1, '0,1', '/user/list', NULL, 1, 1, 3);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
-VALUES ('3', '权限信息', '权限信息', 'sys:perm', 1, '0,1', '/perm/list', NULL, 1, 1, 4);
+VALUES ('4', '查看', '查看用户信息', 'user:view', 2, '0,1,2', NULL, NULL, 0, 1, 4);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
-VALUES ('4', '角色信息', '角色信息', 'sys:role', 1, '0,1', '/role/list', NULL, 1, 1, 5);
+VALUES ('5', '修改', '修改用户信息', 'user:edit', 2, '0,1,2', NULL, NULL, 0, 1, 5);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
-VALUES ('5', '日志信息', '日志信息', 'sys:log', 0, '0,', NULL, NULL, 1, 1, 6);
+VALUES ('6', '权限信息', '权限信息', NULL, 1, '0,1', '/perm/list', NULL, 1, 1, 6);
+INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('7', '查看', '查看权限信息', 'perm:view', 6, '0,1,6', NULL, NULL, 0, 1, 7);
+INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('8', '编辑', '编辑权限信息', 'perm:edit', 6, '0,1,6', NULL, NULL, 0, 1, 8);
+INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('9', '角色信息', '角色信息', NULL, 1, '0,1', '/role/list', NULL, 1, 1, 9);
+INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('10', '查看', '查看角色信息', 'role:view', 9, '0,1,9', NULL, NULL, 0, 1, 10);
+INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('11', '编辑', '编辑角色信息', 'role:edit', 9, '0,1,9', NULL, NULL, 0, 1, 11);
+INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight)
+VALUES ('12', '日志信息', '日志信息', NULL, 0, '0,', NULL, NULL, 1, 1, 12);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, is_show, is_sys, weight, target)
-VALUES ('6', '数据库监控', '数据库监控', 'sys:log:datasource', 5, '0,5', '/druid/datasource.html', NULL, 1, 1, 7, '_blank');
+VALUES ('13', '数据库监控', '数据库监控', NULL, 12, '0,12', '/druid/datasource.html', NULL, 1, 1, 13, '_blank');
 
 -- ----------------------------
 -- Table structure for `template`
@@ -124,9 +136,9 @@ VALUES ('6', '数据库监控', '数据库监控', 'sys:log:datasource', 5, '0,5
 DROP TABLE IF EXISTS `m_user_role`;
 CREATE TABLE `m_user_role` (
   `id`         VARCHAR(64)  NOT NULL,
-  `user_id`    VARCHAR(64)      NOT NULL
+  `user_id`    VARCHAR(64)  NOT NULL
   COMMENT '用户Id',
-  `role_id`    VARCHAR(64)      NOT NULL
+  `role_id`    VARCHAR(64)  NOT NULL
   COMMENT '角色Id',
   `created_at` DATETIME     NOT NULL  DEFAULT NOW()
   COMMENT '创建时间',
@@ -151,9 +163,9 @@ INSERT INTO m_user_role (id, user_id, role_id) VALUES ('2', '2', '2');
 DROP TABLE IF EXISTS `m_role_permission`;
 CREATE TABLE `m_role_permission` (
   `id`            VARCHAR(64)  NOT NULL,
-  `role_id`       VARCHAR(64)      NOT NULL
+  `role_id`       VARCHAR(64)  NOT NULL
   COMMENT '角色id',
-  `permission_id` VARCHAR(64)     NOT NULL
+  `permission_id` VARCHAR(64)  NOT NULL
   COMMENT '权限id',
   `created_at`    DATETIME     NOT NULL DEFAULT NOW()
   COMMENT '创建时间',
@@ -171,13 +183,14 @@ CREATE TABLE `m_role_permission` (
   AUTO_INCREMENT = 4
   DEFAULT CHARSET = utf8;
 
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('1', '1', '1');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('2', '1', '2');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('3', '1', '3');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('4', '1', '4');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('5', '1', '5');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('6', '1', '6');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('7', '2', '1');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('8', '2', '2');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('9', '2', '3');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('10', '2', '4');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('1', '2', '1');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('2', '2', '2');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('3', '2', '3');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('4', '2', '4');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('5', '2', '5');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('6', '2', '6');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('7', '2', '7');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('8', '2', '8');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('9', '2', '9');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('10', '2', '10');
+INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('11', '2', '11');

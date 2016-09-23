@@ -2,6 +2,7 @@ package com.demo.boot.configure.shiro;
 
 import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.User;
+import com.demo.boot.utils.StringUtils;
 import com.demo.boot.utils.UserUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -30,7 +31,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        LOG.info("##################执行Shiro权限认证##################");
+        LOG.info("执行Shiro权限认证");
         //获取当前登录输入的用户名，等价于(String) principalCollection.fromRealm(getName()).iterator().next();
         String loginName = (String) super.getAvailablePrincipal(principals);
         //到数据库查是否有此对象
@@ -42,7 +43,8 @@ public class ShiroRealm extends AuthorizingRealm {
             //用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
             List<Permission> permissionList = UserUtils.getPerms();
             for (Permission permission : permissionList) {
-                permissionNames.add(permission.getUniqueKey());
+                if (StringUtils.isNoneBlank(permission.getUniqueKey()))
+                    permissionNames.add(permission.getUniqueKey());
             }
             //用户的角色集合
             info.setRoles(user.getRolesKey());

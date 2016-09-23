@@ -8,9 +8,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("user")
-@RequiresPermissions("sys:user")
 public class UserController {
 
+
+    @RequiresPermissions("user:view")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
         return new ModelAndView("boot/user");

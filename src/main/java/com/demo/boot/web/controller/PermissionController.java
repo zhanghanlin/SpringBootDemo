@@ -19,7 +19,7 @@ public class PermissionController {
     @Resource
     PermissionService permissionService;
     
-    @RequiresPermissions("sys:perm")
+    @RequiresPermissions("perm:view")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
         List<Permission> list = Lists.newArrayList();
