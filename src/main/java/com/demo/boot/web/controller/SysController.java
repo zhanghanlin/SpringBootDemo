@@ -125,7 +125,12 @@ public class SysController {
     }
 
     @RequestMapping("/403")
-    public ModelAndView unauthorizedRole() {
+    public ModelAndView unauthorized() {
         return new ModelAndView("error/403");
+    }
+
+    @RequestMapping("/404")
+    public ModelAndView pageNotFound() {
+        return new ModelAndView("error/404");
     }
 }

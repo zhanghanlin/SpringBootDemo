@@ -1,6 +1,8 @@
 package com.demo.boot.configure;
 
 import org.apache.shiro.authz.UnauthorizedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 默认异常处理
@@ -28,7 +32,8 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(UnauthorizedException.class)
-    public ModelAndView unauthorizedException() {
+    public ModelAndView unauthorizedException(Exception e) {
+        LOG.info(e.getMessage());
         return new ModelAndView("error/403");
     }
 }
