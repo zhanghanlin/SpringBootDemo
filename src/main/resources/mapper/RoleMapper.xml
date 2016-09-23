@@ -12,38 +12,25 @@
     <result column="changed_at" property="changedAt" jdbcType="TIMESTAMP" />
     <result column="changed_by" property="changedBy" jdbcType="VARCHAR" />
     <result column="version" property="version" jdbcType="INTEGER" />
-    <collection property="permissions" ofType="Permission">
-      <id property="id" column="permission.id"/>
-      <id property="name" column="permission.name"/>
-      <id property="uniqueKey" column="permission.uniqueKey"/>
-    </collection>
   </resultMap>
   <sql id="Base_Column_List" >
-    r.id, r.name, r.note, r.unique_key, r.status, r.created_at, r.created_by, r.changed_at, r.changed_by,
-    r.version, p.id AS "permission.id", p.name AS "permission.name", p.unique_key AS "permission.uniqueKey"
-  </sql>
-  <sql id="Left_Join">
-    LEFT JOIN m_role_permission rp ON rp.role_id = r.id
-    LEFT JOIN m_permission p ON p.id = rp.permission_id
+    r.id, r.name, r.note, r.unique_key, r.status, r.created_at, r.created_by, r.changed_at, r.changed_by, r.version
   </sql>
   <select id="get" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from m_role r
-    <include refid="Left_Join"/>
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="getAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from m_role r
-    <include refid="Left_Join"/>
   </select>
   <select id="getRoleByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from m_role r
-    <include refid="Left_Join"/>
     JOIN m_user_role ur ON ur.role_id = r.id AND ur.user_id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="delete" parameterType="java.lang.String" >
