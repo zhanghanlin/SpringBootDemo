@@ -6,6 +6,7 @@ import com.demo.boot.mapper.RoleMapper;
 import com.demo.boot.mapper.UserMapper;
 import com.demo.boot.utils.IdGen;
 import com.demo.boot.utils.StringUtils;
+import com.demo.boot.utils.UserUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -39,6 +40,16 @@ public class UserService {
             if (StringUtils.isBlank(user.getId())) {
                 throw new RuntimeException("用户创建失败");
             }
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void update(User user) {
+        try {
+            user.setChangedBy(UserUtils.getUser().getUserName());
+            userMapper.update(user);
+            UserUtils.clearCache(user);
         } catch (Exception e) {
             throw new RuntimeException();
         }

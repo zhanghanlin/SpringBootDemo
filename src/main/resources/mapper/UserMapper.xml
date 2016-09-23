@@ -114,9 +114,6 @@
       <if test="changedBy != null" >
         #{changedBy,jdbcType=VARCHAR},
       </if>
-      <if test="version != null" >
-        #{version,jdbcType=INTEGER},
-      </if>
     </trim>
   </insert>
   <update id="update" parameterType="com.demo.boot.entity.User" >
@@ -146,15 +143,11 @@
       <if test="createdBy != null" >
         created_by = #{createdBy,jdbcType=VARCHAR},
       </if>
-      <if test="changedAt != null" >
-        changed_at = #{changedAt,jdbcType=TIMESTAMP},
-      </if>
       <if test="changedBy != null" >
         changed_by = #{changedBy,jdbcType=VARCHAR},
       </if>
-      <if test="version != null" >
-        version = #{version,jdbcType=INTEGER},
-      </if>
+      version = version + 1,
+      changed_at = NOW()
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>

@@ -21,14 +21,14 @@ $(function () {
                     {data: 'userName'},
                     {data: 'email'},
                     {data: 'displayName'},
-                    {data: 'status'},
+                    {data: 'status'}
                 ],
                 select: true,
                 language: {
                     url: '/js/bootstrap/dataTable.oLanguage.json'
                 },
                 fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    $(nRow).attr('data-id', aData['id']);
+                    $(nRow).append('<td><a href="/user/edit/' + aData["id"] + '">编辑</a></td>')
                 }
             });
         }
