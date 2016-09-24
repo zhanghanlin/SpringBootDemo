@@ -13,7 +13,7 @@
         </div>
         <form id="roleForm" class="form-horizontal" action="/role/edit" method="post">
             <input type="hidden" name="id" th:value="${role.id}"/>
-            <input type="hidden" name="permIds"/>
+            <input type="hidden" id="permIds" name="permIds" th:value="${role.permIds}"/>
             <div class="box-body">
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">角色名</label>
@@ -46,10 +46,10 @@
                 <div class="form-group">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-4">
+                        <button type="button" class="btn btn-default">Cancel</button>
                         <shiro:hasPermission name="role:edit">
-                            <button type="submit" class="btn btn-default">Cancel</button>
+                            <button type="submit" class="btn btn-info pull-right">Save</button>
                         </shiro:hasPermission>
-                        <button type="submit" class="btn btn-info pull-right">Save</button>
                     </div>
                 </div>
             </div>
@@ -59,6 +59,7 @@
 </section>
 <script src="/js/jQuery/jquery.inputmask.js"></script>
 <script src="/js/jQuery/jquery.ztree.all-3.5.min.js"></script>
+<script src="/js/jQuery/jquery.validate.min.js"></script>
 <script th:inline="javascript">
     $("[data-inputmask]").inputmask();
 

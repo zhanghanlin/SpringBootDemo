@@ -78,7 +78,7 @@ public class SysService {
             roleService.update(role);
         }
         roleService.deleteRolePermission(role.getId());
-        if (role.getPermIds() != null && !role.getPermIds().isEmpty())
+        if (role.getPermIdList() != null && !role.getPermIdList().isEmpty())
             roleService.insertRolePermission(role);
         // 清除用户角色缓存
         UserUtils.Cache.removeCache(UserUtils.CACHE_ROLE_LIST);

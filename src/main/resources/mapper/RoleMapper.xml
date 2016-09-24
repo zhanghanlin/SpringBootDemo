@@ -141,8 +141,8 @@
   </delete>
   <insert id="insertRolePermission" parameterType="com.demo.boot.entity.Role" >
     INSERT INTO m_role_permission (role_id,permission_id)
-    <foreach collection="permIds" item="p" separator=" union all ">
-      SELECT #{id}, #{p}
+    <foreach collection="perms" item="p" separator=" union all ">
+      SELECT #{id}, #{p.id}
     </foreach>
   </insert>
 </mapper>

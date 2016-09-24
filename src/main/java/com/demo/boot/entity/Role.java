@@ -1,6 +1,6 @@
 package com.demo.boot.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.demo.boot.utils.StringUtils;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class Role extends BaseEntity {
 
     private Integer status;
 
-    private List<String> permIds = Lists.newArrayList();
+    private List<Permission> perms = Lists.newArrayList();
 
     public String getName() {
         return name;
@@ -49,12 +49,59 @@ public class Role extends BaseEntity {
         this.status = status;
     }
 
-    @JsonIgnore
-    public List<String> getPermIds() {
-        return permIds;
+    public List<Permission> getPerms() {
+        return perms;
     }
 
-    public void setPermIds(List<String> permIds) {
-        this.permIds = permIds;
+    public void setPerms(List<Permission> perms) {
+        this.perms = perms;
+    }
+
+    /**
+     * 根据权限集合得到权限Id集合
+     *
+     * @return
+     */
+    public List<String> getPermIdList() {
+        List<String> permIdList = Lists.newArrayList();
+        for (Permission p : perms) {
+            permIdList.add(p.getId());
+        }
+        return permIdList;
+    }
+
+    /**
+     * 根据Id拼装权限对象 写入权限集合
+     *
+     * @param perms
+     */
+    public void setPermIdList(List<String> perms) {
+        this.perms = Lists.newArrayList();
+        for (String id : perms) {
+            Permission p = new Permission();
+            p.setId(id);
+            this.perms.add(p);
+        }
+    }
+
+    /**
+     * 获取逗号分割的权限Id集合
+     *
+     * @return
+     */
+    public String getPermIds() {
+        return StringUtils.join(getPermIdList(), ",");
+    }
+
+    /**
+     * 写入权限Id串
+     *
+     * @param permIds
+     */
+    public void setPermIds(String permIds) {
+        if (StringUtils.isNotBlank(permIds)) {
+            String[] ids = StringUtils.split(permIds, ",");
+            setPermIdList(Lists.newArrayList(ids));
+        }
     }
 }
