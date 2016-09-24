@@ -51,7 +51,7 @@
     from m_permission p
     <include refid="menuJoins"/>
      JOIN m_role_permission rp ON rp.permission_id = p.id
-     JOIN m_user_role ur ON ur.role_id = rp.role_id AND ur.id = #{id,jdbcType=VARCHAR}
+     JOIN m_user_role ur ON ur.role_id = rp.role_id AND ur.user_id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="getByRole" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
