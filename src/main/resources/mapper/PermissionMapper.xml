@@ -45,13 +45,20 @@
     from m_permission p
     <include refid="menuJoins"/>
   </select>
-  <select id="getPermissionByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="getByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from m_permission p
     <include refid="menuJoins"/>
      JOIN m_role_permission rp ON rp.permission_id = p.id
      JOIN m_user_role ur ON ur.role_id = rp.role_id AND ur.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="getByRole" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from m_permission p
+    <include refid="menuJoins"/>
+    JOIN m_role_permission rp ON rp.permission_id = p.id AND rp.role_id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="delete" parameterType="java.lang.String" >
     delete from m_permission

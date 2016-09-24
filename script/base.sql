@@ -135,62 +135,40 @@ VALUES ('13', '数据库监控', '数据库监控', NULL, 12, '0,12', '/druid/da
 -- ----------------------------
 DROP TABLE IF EXISTS `m_user_role`;
 CREATE TABLE `m_user_role` (
-  `id`         VARCHAR(64)  NOT NULL,
-  `user_id`    VARCHAR(64)  NOT NULL
+  `user_id` VARCHAR(64) NOT NULL
   COMMENT '用户Id',
-  `role_id`    VARCHAR(64)  NOT NULL
+  `role_id` VARCHAR(64) NOT NULL
   COMMENT '角色Id',
-  `created_at` DATETIME     NOT NULL  DEFAULT NOW()
-  COMMENT '创建时间',
-  `created_by` VARCHAR(100) NOT NULL  DEFAULT 'System'
-  COMMENT '创建人',
-  `changed_at` DATETIME               DEFAULT NOW()
-  COMMENT '修改时间',
-  `changed_by` VARCHAR(100)           DEFAULT NULL
-  COMMENT '修改人',
-  `version`    INT(10)      NOT NULL  DEFAULT 1,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNI_ID` (`id`) USING BTREE
+  PRIMARY KEY (`user_id`, `role_id`)
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 4
   DEFAULT CHARSET = utf8;
 
-INSERT INTO m_user_role (id, user_id, role_id) VALUES ('1', '1', '1');
-INSERT INTO m_user_role (id, user_id, role_id) VALUES ('2', '2', '2');
+INSERT INTO m_user_role (user_id, role_id) VALUES ('1', '1');
+INSERT INTO m_user_role (user_id, role_id) VALUES ('2', '2');
 
 
 DROP TABLE IF EXISTS `m_role_permission`;
 CREATE TABLE `m_role_permission` (
-  `id`            VARCHAR(64)  NOT NULL,
-  `role_id`       VARCHAR(64)  NOT NULL
+  `role_id`       VARCHAR(64) NOT NULL
   COMMENT '角色id',
-  `permission_id` VARCHAR(64)  NOT NULL
+  `permission_id` VARCHAR(64) NOT NULL
   COMMENT '权限id',
-  `created_at`    DATETIME     NOT NULL DEFAULT NOW()
-  COMMENT '创建时间',
-  `created_by`    VARCHAR(100) NOT NULL DEFAULT 'System'
-  COMMENT '创建人',
-  `changed_at`    DATETIME              DEFAULT NOW()
-  COMMENT '修改时间',
-  `changed_by`    VARCHAR(100)          DEFAULT NULL
-  COMMENT '修改人',
-  `version`       INT(10)      NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNI_ID` (`id`) USING BTREE
+  PRIMARY KEY (`role_id`, `permission_id`)
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 4
   DEFAULT CHARSET = utf8;
 
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('1', '2', '1');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('2', '2', '2');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('3', '2', '3');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('4', '2', '4');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('5', '2', '5');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('6', '2', '6');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('7', '2', '7');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('8', '2', '8');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('9', '2', '9');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('10', '2', '10');
-INSERT INTO m_role_permission (id, role_id, permission_id) VALUES ('11', '2', '11');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '1');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '2');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '3');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '4');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '5');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '6');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '7');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '8');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '9');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '10');
+INSERT INTO m_role_permission (role_id, permission_id) VALUES ('2', '11');

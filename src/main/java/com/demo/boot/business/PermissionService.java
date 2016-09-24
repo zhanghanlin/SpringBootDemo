@@ -14,17 +14,28 @@ public class PermissionService {
     PermissionMapper permissionMapper;
 
     /**
+     * 根据角色查询权限
+     *
+     * @param roleId
+     * @return
+     */
+    public List<Permission> getByRole(String roleId) {
+        return permissionMapper.getByRole(roleId);
+    }
+
+    /**
      * 查询用户的权限列表
      *
      * @param userId
      * @return
      */
-    public List<Permission> getPermissionByUser(String userId) {
-        return permissionMapper.getPermissionByUser(userId);
+    public List<Permission> getByUser(String userId) {
+        return permissionMapper.getByUser(userId);
     }
 
     /**
      * 获取所有权限
+     *
      * @return
      */
     public List<Permission> getAll() {

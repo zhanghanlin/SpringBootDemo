@@ -45,7 +45,7 @@ public class UserUtils {
             if (user == null) {
                 return null;
             }
-            user.setRoles(roleService.getRoleByUser(user.getId()));
+            user.setRoles(roleService.getByUser(user.getId()));
             CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
             CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getUserName(), user);
         }
@@ -65,7 +65,7 @@ public class UserUtils {
             if (user == null) {
                 return null;
             }
-            user.setRoles(roleService.getRoleByUser(user.getId()));
+            user.setRoles(roleService.getByUser(user.getId()));
             CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
             CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getUserName(), user);
         }
@@ -99,7 +99,7 @@ public class UserUtils {
     public static User getUser() {
         Subject subject = SecurityUtils.getSubject();
         if (subject == null || subject.getPrincipal() == null) {
-            return null;
+            return new User();
         }
         String userName = subject.getPrincipal().toString();
         User user = userService.getByUserName(userName);
@@ -122,7 +122,7 @@ public class UserUtils {
             if (user.isAdmin()) {
                 roles = roleService.getAll();
             } else {
-                roles = roleService.getRoleByUser(user.getId());
+                roles = roleService.getByUser(user.getId());
             }
             Cache.putCache(CACHE_ROLE_LIST, roles);
         }
@@ -141,14 +141,14 @@ public class UserUtils {
             if (user.isAdmin()) {
                 perms = permissionService.getAll();
             } else {
-                perms = permissionService.getPermissionByUser(user.getId());
+                perms = permissionService.getByUser(user.getId());
             }
             Cache.putCache(CACHE_PERM_LIST, perms);
         }
         return perms;
     }
 
-    static class Cache {
+    public static class Cache {
         public static Session getSession() {
             try {
                 Subject subject = SecurityUtils.getSubject();

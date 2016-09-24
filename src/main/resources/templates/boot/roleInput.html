@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <title>Index</title>
+    <title>编辑角色</title>
     <div th:substituteby="/common/include"></div>
     <link rel="stylesheet" href="/css/treeTable/zTreeStyle.min.css"/>
 </head>
@@ -11,8 +11,9 @@
         <div class="box-header with-border">
             <h3 class="box-title">编辑角色</h3>
         </div>
-        <form class="form-horizontal" action="/role/edit" method="post">
+        <form id="roleForm" class="form-horizontal" action="/role/edit" method="post">
             <input type="hidden" name="id" th:value="${role.id}"/>
+            <input type="hidden" name="permIds"/>
             <div class="box-body">
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">角色名</label>
@@ -22,10 +23,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="node" class="col-sm-2 control-label">说明</label>
+                    <label for="note" class="col-sm-2 control-label">说明</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="node" name="node"
-                               th:value="${role.node}" placeholder="角色说明"/>
+                        <input type="text" class="form-control" id="note" name="note"
+                               th:value="${role.note}" placeholder="角色说明"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -40,13 +41,14 @@
                     <label class="col-sm-2 control-label">角色授权</label>
                     <div class="col-sm-10">
                         <div id="tree" class="ztree" style="float:left;"></div>
-                        <input type="hidden" name="permIds" id="permIds"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-4">
-                        <button type="submit" class="btn btn-default">Cancel</button>
+                        <shiro:hasPermission name="role:edit">
+                            <button type="submit" class="btn btn-default">Cancel</button>
+                        </shiro:hasPermission>
                         <button type="submit" class="btn btn-info pull-right">Save</button>
                     </div>
                 </div>
@@ -56,40 +58,62 @@
     </div>
 </section>
 <script src="/js/jQuery/jquery.inputmask.js"></script>
-<script src="/js/jQuery/jquery.ztree.all-3.5.mis.js"></script>
+<script src="/js/jQuery/jquery.ztree.all-3.5.min.js"></script>
 <script th:inline="javascript">
     $("[data-inputmask]").inputmask();
-//
-//    var setting = {
-//        check: {enable: true, nocheckInherit: true}, view: {selectedMulti: false},
-//        data: {simpleData: {enable: true}}, callback: {
-//            beforeClick: function (id, node) {
-//                tree.checkNode(node, !node.checked, true, true);
-//                return false;
-//            }
-//        }
-//    };
-//
-//    // 用户-菜单
-//    var zNodes = $(jQuery).map(function () {
-//        return $(this).attr([property]);
-//    }).get().join(',');
-//
-//    // 初始化树结构
-//    var tree = $.fn.zTree.init($("#tree"), setting, zNodes);
-//    // 不选择父节点
-//    tree.setting.check.chkboxType = {"Y": "ps", "N": "s"};
-//    // 默认选择节点
-//    var ids = "${role.menuIds}".split(",");
-//    for (var i = 0; i < ids.length; i++) {
-//        var node = tree.getNodeByParam("id", ids[i]);
-//        try {
-//            tree.checkNode(node, true, false);
-//        } catch (e) {
-//        }
-//    }
-//    // 默认展开全部节点
-//    tree.expandAll(true);
+
+    $("#roleForm").validate({
+        submitHandler: function (form) {
+            var ids = [];
+            var nodes = tree.getCheckedNodes(true);
+            $.each(nodes, function (i, o) {
+                if (o.id != '0') {
+                    ids.push(o.id);
+                }
+            });
+            $("#permIds").val(ids);
+            form.submit();
+        }
+    });
+
+    var setting = {
+        check: {enable: true, nocheckInherit: true}, view: {selectedMulti: false},
+        data: {simpleData: {enable: true}}, callback: {
+            beforeClick: function (id, node) {
+                tree.checkNode(node, !node.checked, true, true);
+                return false;
+            }
+        }
+    };
+    var zNodes = new Array();
+    /*<![CDATA[*/
+    $.each(/*[[${allPerm}]]*/, function (i, o) {
+        var node = {};
+        node['id'] = o.id;
+        node['name'] = o.name;
+        node['pId'] = o.parent.id;
+        zNodes.push(node);
+    });
+    var node = {};
+    node['id'] = '0';
+    node['name'] = '权限列表';
+    node['pId'] = '0';
+    zNodes.push(node);
+    // 初始化树结构
+    var tree = $.fn.zTree.init($("#tree"), setting, zNodes);
+    // 不选择父节点
+    tree.setting.check.chkboxType = {"Y": "ps", "N": "s"};
+    // 默认选择节点
+    $.each(/*[[${perms}]]*/, function (i, o) {
+        var node = tree.getNodeByParam("id", o.id);
+        try {
+            tree.checkNode(node, true, false);
+        } catch (e) {
+        }
+    });
+    /*]]>*/
+    // 默认展开全部节点
+    tree.expandAll(true);
 </script>
 </body>
 </html>

@@ -55,7 +55,9 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
             @Override
             public void customize(ConfigurableEmbeddedServletContainer container) {
                 ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/404");
+                ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500");
                 container.addErrorPages(error404Page);
+                container.addErrorPages(error500Page);
             }
         };
     }

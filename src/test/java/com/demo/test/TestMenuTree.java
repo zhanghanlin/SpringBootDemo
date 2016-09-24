@@ -14,7 +14,7 @@ public class TestMenuTree extends BaseTest {
 
     @Test
     public void menu() {
-        List<MenuNode> list = sysService.menu();
+        List<MenuNode> list = sysService.tree();
         for (MenuNode m : list) {
             System.out.println(m.getName());
         }

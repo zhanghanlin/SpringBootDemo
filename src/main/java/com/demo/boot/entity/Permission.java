@@ -155,6 +155,9 @@ public class Permission extends BaseEntity {
 
     @JsonIgnore
     public String getParentId() {
+        if (parent == null) {
+            return null;
+        }
         return parent.getId();
     }
 }

@@ -1,5 +1,10 @@
 package com.demo.boot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 public class Role extends BaseEntity {
 
     private String name;
@@ -9,6 +14,8 @@ public class Role extends BaseEntity {
     private String uniqueKey;
 
     private Integer status;
+
+    private List<String> permIds = Lists.newArrayList();
 
     public String getName() {
         return name;
@@ -40,5 +47,14 @@ public class Role extends BaseEntity {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @JsonIgnore
+    public List<String> getPermIds() {
+        return permIds;
+    }
+
+    public void setPermIds(List<String> permIds) {
+        this.permIds = permIds;
     }
 }

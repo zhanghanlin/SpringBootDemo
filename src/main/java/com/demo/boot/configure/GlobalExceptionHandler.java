@@ -16,17 +16,6 @@ public class GlobalExceptionHandler {
     static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * 默认异常处理
-     *
-     * @param e
-     */
-    @ExceptionHandler(Exception.class)
-    public ModelAndView exception(Exception e) {
-        e.printStackTrace();
-        return new ModelAndView("error/500");
-    }
-
-    /**
      * 权限异常
      *
      * @return

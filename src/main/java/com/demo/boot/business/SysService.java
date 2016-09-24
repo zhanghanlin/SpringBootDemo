@@ -1,10 +1,9 @@
 package com.demo.boot.business;
 
 import com.demo.boot.dict.RoleEnum;
-import com.demo.boot.entity.Permission;
-import com.demo.boot.entity.User;
-import com.demo.boot.entity.UserRole;
+import com.demo.boot.entity.*;
 import com.demo.boot.utils.HashPassword;
+import com.demo.boot.utils.StringUtils;
 import com.demo.boot.utils.UserUtils;
 import com.demo.boot.web.vo.Register;
 import com.demo.boot.web.vo.menu.MenuNode;
@@ -27,10 +26,10 @@ public class SysService {
     PermissionService permissionService;
 
     @Resource
-    UserService userService;
+    RoleService roleService;
 
     @Resource
-    UserRoleService userRoleService;
+    UserService userService;
 
     /**
      * 注册
@@ -46,13 +45,43 @@ public class SysService {
             user.setPassword(HashPassword.pwdHash(register.getPassword()));
             user.setDisplayName(register.getDisplayName());
             userService.insert(user);
-            UserRole userRole = new UserRole();
-            userRole.setUserId(user.getId());
-            userRole.setRoleId(RoleEnum.NORMAL_USER.getId());
-            userRoleService.insert(userRole);
+            List<String> userRoles = Lists.newArrayList();
+            userRoles.add(RoleEnum.NORMAL_USER.getId());
+            user.setRoleIds(userRoles);
+            userService.insertUserRole(user);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException();
         }
+    }
+
+    /**
+     * 获得角色
+     *
+     * @param id
+     * @return
+     */
+    public Role getRole(String id) {
+        return roleService.get(id);
+    }
+
+    /**
+     * 更新角色
+     *
+     * @param role
+     */
+    @Transactional
+    public void saveRole(Role role) {
+        if (StringUtils.isBlank(role.getId())) {
+            roleService.insert(role);
+        } else {
+            roleService.update(role);
+        }
+        roleService.deleteRolePermission(role.getId());
+        if (role.getPermIds() != null && !role.getPermIds().isEmpty())
+            roleService.insertRolePermission(role);
+        // 清除用户角色缓存
+        UserUtils.Cache.removeCache(UserUtils.CACHE_ROLE_LIST);
     }
 
     /**
@@ -60,7 +89,7 @@ public class SysService {
      *
      * @return
      */
-    public List<MenuNode> menu() {
+    public List<MenuNode> tree() {
         List<Permission> perms = UserUtils.getPerms();
         List<MenuNode> nodes = Lists.newArrayList();
         for (Permission p : perms) {

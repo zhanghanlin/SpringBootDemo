@@ -76,9 +76,6 @@
       <if test="changedBy != null" >
         changed_by,
       </if>
-      <if test="version != null" >
-        version,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -143,12 +140,24 @@
       <if test="createdBy != null" >
         created_by = #{createdBy,jdbcType=VARCHAR},
       </if>
+      <if test="changedAt != null" >
+        changed_at = #{changedAt,jdbcType=TIMESTAMP},
+      </if>
       <if test="changedBy != null" >
         changed_by = #{changedBy,jdbcType=VARCHAR},
       </if>
-      version = version + 1,
-      changed_at = NOW()
+      version = version + 1
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <insert id="insertUserRole" parameterType="com.demo.boot.entity.User">
+    INSERT INTO m_user_role (user_id, role_id)
+    <foreach collection="roleIds" item="r" separator=" union all ">
+      SELECT #{id}, #{r}
+    </foreach>
+  </insert>
+  <delete id="deleteUserRole" parameterType="java.lang.String">
+    delete from m_user_role
+    where user_id = #{id,jdbcType=VARCHAR}
+  </delete>
 </mapper>

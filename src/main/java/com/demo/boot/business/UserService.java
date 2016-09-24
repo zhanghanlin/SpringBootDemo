@@ -4,7 +4,6 @@ import com.demo.boot.entity.Role;
 import com.demo.boot.entity.User;
 import com.demo.boot.mapper.RoleMapper;
 import com.demo.boot.mapper.UserMapper;
-import com.demo.boot.utils.IdGen;
 import com.demo.boot.utils.StringUtils;
 import com.demo.boot.utils.UserUtils;
 import com.github.pagehelper.Page;
@@ -35,7 +34,7 @@ public class UserService {
      */
     public void insert(User user) {
         try {
-            user.setId(IdGen.uuid());
+            user.preInsert();
             userMapper.insert(user);
             if (StringUtils.isBlank(user.getId())) {
                 throw new RuntimeException("用户创建失败");
@@ -45,9 +44,14 @@ public class UserService {
         }
     }
 
+    /**
+     * 更新用户
+     *
+     * @param user
+     */
     public void update(User user) {
         try {
-            user.setChangedBy(UserUtils.getUser().getUserName());
+            user.preUpdate();
             userMapper.update(user);
             UserUtils.clearCache(user);
         } catch (Exception e) {
@@ -63,7 +67,7 @@ public class UserService {
      */
     public User get(String id) {
         User user = userMapper.get(id);
-        List<Role> roles = roleMapper.getRoleByUser(user.getId());
+        List<Role> roles = roleMapper.getByUser(user.getId());
         user.setRoles(roles);
         return user;
     }
@@ -76,7 +80,7 @@ public class UserService {
      */
     public User getByUserName(String userName) {
         User user = userMapper.getByUserName(userName);
-        List<Role> roles = roleMapper.getRoleByUser(user.getId());
+        List<Role> roles = roleMapper.getByUser(user.getId());
         user.setRoles(roles);
         return user;
     }
@@ -101,5 +105,14 @@ public class UserService {
         Page<User> page = PageHelper.startPage(pageNo, pageSize, orderBy);
         userMapper.getAll();
         return page;
+    }
+
+    /**
+     * 写入用户角色关系
+     *
+     * @param user
+     */
+    public void insertUserRole(User user) {
+        userMapper.insertUserRole(user);
     }
 }

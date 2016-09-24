@@ -17,4 +17,8 @@ public interface UserMapper {
     List<User> getAll();
 
     int update(User record);
+
+    int insertUserRole(User record);
+
+    int deleteUserRole(String id);
 }

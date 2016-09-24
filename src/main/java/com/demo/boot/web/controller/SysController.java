@@ -36,7 +36,7 @@ public class SysController {
 
     @RequestMapping("/")
     public ModelAndView index() {
-        List<MenuNode> list = sysService.menu();
+        List<MenuNode> list = sysService.tree();
         return new ModelAndView("index", "perms", list);
     }
 
@@ -130,7 +130,14 @@ public class SysController {
     }
 
     @RequestMapping("/404")
-    public ModelAndView pageNotFound() {
+    public ModelAndView notFound() {
         return new ModelAndView("error/404");
     }
+
+    @RequestMapping("/500")
+    public ModelAndView internalServerError() {
+        return new ModelAndView("error/500");
+    }
+
+
 }

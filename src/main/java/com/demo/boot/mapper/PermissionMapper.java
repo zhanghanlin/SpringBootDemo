@@ -12,9 +12,11 @@ public interface PermissionMapper {
 
     Permission get(String id);
 
-    List<Permission> getPermissionByUser(String id);
+    List<Permission> getByUser(String id);
 
     List<Permission> getAll();
 
     int update(Permission record);
+
+    List<Permission> getByRole(String id);
 }

@@ -1,6 +1,7 @@
 package com.demo.boot.entity;
 
 import com.demo.boot.dict.RoleEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -22,6 +23,8 @@ public class User extends BaseEntity {
     private Integer status;
 
     private List<Role> roles = Lists.newArrayList();
+
+    private List<String> roleIds = Lists.newArrayList();
 
     public String getUserName() {
         return userName;
@@ -77,6 +80,15 @@ public class User extends BaseEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @JsonIgnore
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds;
     }
 
     public Set<String> getRolesKey() {

@@ -1,5 +1,9 @@
 package com.demo.boot.entity;
 
+import com.demo.boot.utils.IdGen;
+import com.demo.boot.utils.StringUtils;
+import com.demo.boot.utils.UserUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -63,5 +67,27 @@ public class BaseEntity implements Serializable {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public void preInsert() {
+        setId(IdGen.uuid());
+        User user = UserUtils.getUser();
+        if (StringUtils.isNotBlank(user.getId())) {
+            this.createdBy = user.getUserName();
+            this.changedBy = user.getUserName();
+        }
+        this.createdAt = new Date();
+        this.changedAt = this.createdAt;
+    }
+
+    /**
+     * 更新之前执行方法，需要手动调用
+     */
+    public void preUpdate() {
+        User user = UserUtils.getUser();
+        if (StringUtils.isNotBlank(user.getId())) {
+            this.changedBy = user.getUserName();
+        }
+        this.changedAt = new Date();
     }
 }

@@ -27,7 +27,7 @@
     <include refid="Base_Column_List" />
     from m_role r
   </select>
-  <select id="getRoleByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="getByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from m_role r
@@ -37,7 +37,7 @@
     delete from m_role
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.demo.boot.entity.Role" >
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="id" parameterType="com.demo.boot.entity.Role" >
     insert into m_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -131,10 +131,18 @@
       <if test="changedBy != null" >
         changed_by = #{changedBy,jdbcType=VARCHAR},
       </if>
-      <if test="version != null" >
-        version = #{version,jdbcType=INTEGER},
-      </if>
+      version = version + 1
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <delete id="deleteRolePermission" parameterType="java.lang.String" >
+    delete from m_role_permission
+    where role_id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertRolePermission" parameterType="com.demo.boot.entity.Role" >
+    INSERT INTO m_role_permission (role_id,permission_id)
+    <foreach collection="permIds" item="p" separator=" union all ">
+      SELECT #{id}, #{p}
+    </foreach>
+  </insert>
 </mapper>

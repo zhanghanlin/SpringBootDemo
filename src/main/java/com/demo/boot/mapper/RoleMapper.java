@@ -12,9 +12,13 @@ public interface RoleMapper {
 
     Role get(String id);
 
-    List<Role> getRoleByUser(String id);
+    List<Role> getByUser(String id);
 
     List<Role> getAll();
 
     int update(Role record);
+
+    int deleteRolePermission(String id);
+
+    int insertRolePermission(Role record);
 }
