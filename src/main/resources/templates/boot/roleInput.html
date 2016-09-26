@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>编辑角色</title>
     <div th:substituteby="/common/include"></div>
@@ -47,9 +47,7 @@
                     <div class="col-sm-2"></div>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-default">Cancel</button>
-                        <shiro:hasPermission name="role:edit">
-                            <button type="submit" class="btn btn-info pull-right">Save</button>
-                        </shiro:hasPermission>
+                        <button type="submit" class="btn btn-info pull-right">Save</button>
                     </div>
                 </div>
             </div>

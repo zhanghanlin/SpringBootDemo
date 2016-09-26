@@ -56,16 +56,6 @@ public class SysService {
     }
 
     /**
-     * 获得角色
-     *
-     * @param id
-     * @return
-     */
-    public Role getRole(String id) {
-        return roleService.get(id);
-    }
-
-    /**
      * 更新角色
      *
      * @param role

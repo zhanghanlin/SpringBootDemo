@@ -28,7 +28,9 @@ $(function () {
                     url: '/js/bootstrap/dataTable.oLanguage.json'
                 },
                 fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    $(nRow).append('<td><a href="/user/edit/' + aData["id"] + '">编辑</a></td>')
+                    if ($('#action').length > 0) {
+                        $(nRow).append('<td><a href="/user/edit/' + aData["id"] + '">编辑</a></td>')
+                    }
                 }
             });
         }

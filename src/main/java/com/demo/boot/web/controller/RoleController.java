@@ -1,6 +1,7 @@
 package com.demo.boot.web.controller;
 
 import com.demo.boot.business.PermissionService;
+import com.demo.boot.business.RoleService;
 import com.demo.boot.business.SysService;
 import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.Role;
@@ -26,16 +27,21 @@ public class RoleController {
     @Resource
     PermissionService permissionService;
 
+    @Resource
+    RoleService roleService;
+
     @RequiresPermissions("role:view")
     @RequestMapping(value = {"/list", "/", ""}, method = RequestMethod.GET)
     public ModelAndView list() {
         return new ModelAndView("boot/role");
     }
 
+
+    @RequiresPermissions("role:edit")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable String id) {
         ModelAndView model = new ModelAndView("boot/roleInput");
-        Role role = sysService.getRole(id);
+        Role role = roleService.get(id);
         List<Permission> perms = permissionService.getByRole(id);
         List<Permission> allPerm = permissionService.getAll();
         model.addObject("role", role);
@@ -44,6 +50,7 @@ public class RoleController {
         return model;
     }
 
+    @RequiresPermissions("role:edit")
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView edit(Role role, RedirectAttributes redirectAttributes) {
         try {

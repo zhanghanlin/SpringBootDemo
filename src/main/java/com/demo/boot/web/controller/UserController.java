@@ -27,12 +27,14 @@ public class UserController {
         return new ModelAndView("boot/user");
     }
 
+    @RequiresPermissions("user:edit")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable String id) {
         User user = UserUtils.get(id);
         return new ModelAndView("boot/userInput", "user", user);
     }
 
+    @RequiresPermissions("user:edit")
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView edit(User user, RedirectAttributes redirectAttributes) {
         try {

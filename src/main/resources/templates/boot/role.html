@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <title>Index</title>
     <div th:substituteby="/common/include"></div>
@@ -19,12 +19,19 @@
                     <th>说明</th>
                     <th>角色标识</th>
                     <th>状态</th>
-                    <th>操作</th>
+                    <shiro:hasPermission name="role:edit">
+                        <th id="action">操作</th>
+                    </shiro:hasPermission>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td colspan="5">Loading data from server</td>
+                    <shiro:hasPermission name="role:edit">
+                        <td colspan="5">Loading data from server</td>
+                    </shiro:hasPermission>
+                    <shiro:lacksPermission name="role:edit">
+                        <td colspan="4">Loading data from server</td>
+                    </shiro:lacksPermission>
                 </tr>
                 </tbody>
             </table>
