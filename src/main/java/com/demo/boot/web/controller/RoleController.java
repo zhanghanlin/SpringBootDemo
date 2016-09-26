@@ -3,6 +3,7 @@ package com.demo.boot.web.controller;
 import com.demo.boot.business.PermissionService;
 import com.demo.boot.business.RoleService;
 import com.demo.boot.business.SysService;
+import com.demo.boot.business.UserService;
 import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.Role;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,6 +30,9 @@ public class RoleController {
 
     @Resource
     RoleService roleService;
+
+    @Resource
+    UserService userService;
 
     @RequiresPermissions("role:view")
     @RequestMapping(value = {"/list", "/", ""}, method = RequestMethod.GET)
@@ -60,5 +64,16 @@ public class RoleController {
             e.printStackTrace();
         }
         return new ModelAndView(new RedirectView("list"));
+    }
+
+    @RequiresPermissions("role:edit")
+    @RequestMapping(value = "/assign/{id}", method = RequestMethod.GET)
+    public ModelAndView assign(@PathVariable String id) {
+        ModelAndView model = new ModelAndView("boot/roleAssign");
+        Role role = roleService.get(id);
+        model.addObject("role", role);
+        model.addObject("user", userService.getByRole(id));
+        model.addObject("notUser", userService.getByNotRole(id));
+        return model;
     }
 }

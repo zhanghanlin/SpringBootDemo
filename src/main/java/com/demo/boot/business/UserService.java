@@ -115,4 +115,24 @@ public class UserService {
     public void insertUserRole(User user) {
         userMapper.insertUserRole(user);
     }
+
+    /**
+     * 查询该角色下的用户
+     *
+     * @param id
+     * @return
+     */
+    public List<User> getByRole(String id) {
+        return userMapper.getByRole(id);
+    }
+
+    /**
+     * 查询不包含该角色的用户
+     *
+     * @param id
+     * @return
+     */
+    public List<User> getByNotRole(String id) {
+        return userMapper.getByNotRole(id);
+    }
 }

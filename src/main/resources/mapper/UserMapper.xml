@@ -30,6 +30,18 @@
     <include refid="Base_Column_List" />
     from m_user
   </select>
+  <select id="getByRole" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from m_user u, m_user_role ur
+    WHERE u.id = ur.user_id AND ur.role_id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="getByNotRole" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from m_user u, m_user_role ur
+    WHERE u.id = ur.user_id AND ur.role_id != #{id,jdbcType=VARCHAR}
+  </select>
   <select id="getByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

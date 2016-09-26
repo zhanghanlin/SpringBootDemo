@@ -21,4 +21,8 @@ public interface UserMapper {
     int insertUserRole(User record);
 
     int deleteUserRole(String id);
+
+    List<User> getByRole(String id);
+
+    List<User> getByNotRole(String id);
 }
