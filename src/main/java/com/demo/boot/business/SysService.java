@@ -98,11 +98,11 @@ public class SysService {
         for (String uid : userIds) {
             User user = UserUtils.get(uid);
             if (user == null) {
-                return;
+                continue;
             }
             List<String> roleIds = user.getRoleIds();
             if (roleIds.contains(role.getId())) {
-                return;
+                continue;
             }
             roleIds.add(role.getId());
             user.setRoleIds(roleIds);
