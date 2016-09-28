@@ -145,4 +145,7 @@
       SELECT #{id}, #{p.id}
     </foreach>
   </insert>
+  <delete id="outUserInRole">
+    DELETE FROM m_user_role WHERE user_id = #{userId} AND role_id = #{roleId}
+  </delete>
 </mapper>

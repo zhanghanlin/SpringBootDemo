@@ -63,7 +63,7 @@ public class UserApiController {
      * @param inRole 是否获取属于这个角色的用户
      * @return
      */
-    @RequestMapping("userRole")
+    @RequestMapping("userRoleTree")
     @ResponseBody
     public List<TreeVo> getByRole(String roleId, boolean inRole) {
         List<TreeVo> list = Lists.newArrayList();
@@ -81,5 +81,39 @@ public class UserApiController {
             list.add(treeVo);
         }
         return list;
+    }
+
+    /**
+     * 根据角色Id得到用户列表
+     *
+     * @param start
+     * @param length
+     * @param column
+     * @param dir
+     * @param draw
+     * @param request
+     * @return
+     */
+    @RequestMapping("userRole")
+    @ResponseBody
+    public TablePage<User> getPageByRole(String roleId,
+                                         @RequestParam(defaultValue = "1", required = false) int start,
+                                         @RequestParam(defaultValue = "10", required = false) int length,
+                                         @RequestParam(value = "order[0][column]", defaultValue = "0", required = false) String column,
+                                         @RequestParam(value = "order[0][dir]", required = false) String dir,
+                                         @RequestParam(defaultValue = "1", required = false) int draw,
+                                         HttpServletRequest request) {
+        String sort = "id";
+        String order = "DESC";
+        String columnName = request.getParameter("columns[" + column + "][data]");
+        if (StringUtils.isNotBlank(columnName)) {
+            sort = StringUtils.camelToUnderline(columnName);
+        }
+        if (StringUtils.isNotBlank(dir)) {
+            order = dir;
+        }
+        Page<User> page = userService.getPageByRole(roleId, (start / length) + 1, length, sort + " " + order);
+        TablePage<User> tablePage = new TablePage<>(draw, page.getTotal(), page.size(), page.getResult());
+        return tablePage;
     }
 }

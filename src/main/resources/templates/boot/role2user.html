@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>角色分配</title>
+    <div th:substituteby="/common/include"></div>
+    <link rel="stylesheet" href="/css/treeTable/zTreeStyle.min.css"/>
+</head>
+<body>
+<section class="content">
+    <form id="roleForm" class="form-horizontal" action="/role/assign" method="post">
+        <input type="hidden" id="roleId" name="id" th:value="${role.id}"/>
+        <input type="hidden" id="roleName" name="name" th:value="${role.name}"/>
+        <input type="hidden" id="userIds" name="userIds"/>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">角色分配</h3>
+            </div>
+            <div class="box-body">
+                <div class="col-sm-3">
+                    <div class="btn-group-vertical">
+                        <button type="button" class="btn btn-default" id="clear">清空分配</button>
+                        <button type="button" class="btn btn-default" id="all">全部分配</button>
+                        <button type="submit" class="btn btn-default" id="save">保存分配</button>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <p>待分配</p>
+                    <div id="notUserTree" class="ztree"></div>
+                </div>
+                <div class="col-sm-3">
+                    <p>已分配</p>
+                    <div id="userTree" class="ztree"></div>
+                </div>
+            </div>
+            <div class="box-footer"></div>
+        </div>
+    </form>
+</section>
+<script src="/js/jQuery/jquery.ztree.all-3.5.min.js"></script>
+<script src="/js/jQuery/jquery.validate.min.js"></script>
+<script th:inline="javascript">
+    var roleId = $('#roleId').val();
+    var setting = {
+        view: {selectedMulti: false, nameIsHTML: true, showTitle: false, dblClickExpand: false},
+        data: {simpleData: {enable: true}},
+        callback: {onClick: treeOnClick}
+    };
+    var userTree, notUserTree, userIds = [];
+    $.get("/user/api/userRoleTree", {
+        "roleId": roleId,
+        "inRole": false
+    }, function (userNodes) {
+        notUserTree = $.fn.zTree.init($("#notUserTree"), setting, userNodes);
+    });
+    $.get("/user/api/userRoleTree", {
+        "roleId": roleId,
+        "inRole": true
+    }, function (userNodes) {
+        var userTreeNodes = [];
+        $.each(userNodes, function (i, o) {
+            userIds.push(o.id);
+            var node = {};
+            node.id = o.id;
+            node.name = '<font color="red">' + o.name + '</font>';
+            node.pId = o.pId;
+            userTreeNodes.push(node);
+        });
+        userTree = $.fn.zTree.init($("#userTree"), setting, userTreeNodes);
+    });
+    //点击选择项回调
+    /*<![CDATA[*/
+    function treeOnClick(event, treeId, treeNode, clickFlag) {
+        $.fn.zTree.getZTreeObj(treeId).expandNode(treeNode);
+        if ("userTree" == treeId && $.inArray(String(treeNode.id), userIds) < 0) {
+            notUserTree.addNodes(null, treeNode);
+            userTree.removeNode(treeNode);
+        }
+        if ("notUserTree" == treeId) {
+            userTree.addNodes(null, treeNode);
+            notUserTree.removeNode(treeNode);
+        }
+    }
+    /*]]>*/
+    $("#roleForm").validate({
+        submitHandler: function (form) {
+            var ids = [];
+            var nodes = userTree.getCheckedNodes(false);
+            $.each(nodes, function (i, o) {
+                if (o.id != '0') {
+                    ids.push(o.id);
+                }
+            });
+            $("#userIds").val(ids);
+            form.submit();
+        }
+    });
+</script>
+</body>
+</html>

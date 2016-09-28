@@ -1,92 +1,98 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <title>角色分配</title>
     <div th:substituteby="/common/include"></div>
+    <link rel="stylesheet" href="/css/bootstrap/dataTables.bootstrap.css"/>
     <link rel="stylesheet" href="/css/treeTable/zTreeStyle.min.css"/>
 </head>
 <body>
 <section class="content">
-    <form id="roleForm" class="form-horizontal" action="/role/assign" method="post">
-        <input type="hidden" id="roleId" name="id" th:value="${role.id}"/>
-        <input type="hidden" id="roleName" name="name" th:value="${role.name}"/>
-        <input type="hidden" id="userIds" name="userIds"/>
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">角色分配</h3>
-            </div>
-            <div class="box-body">
-                <div class="col-sm-3">
-                    <div class="btn-group-vertical">
-                        <button type="button" class="btn btn-default" id="clear">清空分配</button>
-                        <button type="button" class="btn btn-default" id="all">全部分配</button>
-                        <button type="submit" class="btn btn-default" id="save">保存分配</button>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">角色分配</h3>
+        </div>
+        <div class="box-body">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <input type="hidden" id="roleId" th:value="${role.id}"/>
+                        <div class="col-sm-4">角色名称:<b th:text="${role.name}"></b></div>
+                        <div class="col-sm-4">角色说明:<b th:text="${role.note}"></b></div>
+                        <div class="col-sm-4">角色唯一Key:<b th:text="${role.uniqueKey}"></b></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <a th:href="'/role/assign/' + ${role.id}" class="btn btn-primary btn-sm"
+                               role="button">角色分配</a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <p>待分配</p>
-                    <div id="notUserTree" class="ztree"></div>
-                </div>
-                <div class="col-sm-3">
-                    <p>已分配</p>
-                    <div id="userTree" class="ztree"></div>
-                </div>
             </div>
-            <div class="box-footer"></div>
+            <table id="list" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <shiro:hasPermission name="role:edit">
+                        <th id="action">操作</th>
+                    </shiro:hasPermission>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <shiro:hasPermission name="role:edit">
+                        <td colspan="4">Loading data from server</td>
+                    </shiro:hasPermission>
+                    <shiro:lacksPermission name="role:edit">
+                        <td colspan="3">Loading data from server</td>
+                    </shiro:lacksPermission>
+                </tr>
+                </tbody>
+            </table>
         </div>
-    </form>
+    </div>
 </section>
+<script src="/js/jQuery/jquery.dataTables.min.js"></script>
+<script src="/js/bootstrap/dataTables.bootstrap.min.js"></script>
 <script src="/js/jQuery/jquery.ztree.all-3.5.min.js"></script>
-<script src="/js/jQuery/jquery.validate.min.js"></script>
 <script th:inline="javascript">
-    var roleId = $('#roleId').val();
-    var setting = {
-        view: {selectedMulti: false, nameIsHTML: true, showTitle: false, dblClickExpand: false},
-        data: {simpleData: {enable: true}},
-        callback: {onClick: treeOnClick}
-    };
-    var userTree, notUserTree;
-    $.get("/user/api/userRole", {
-        "roleId": roleId,
-        "inRole": false
-    }, function (userNodes) {
-        notUserTree = $.fn.zTree.init($("#notUserTree"), setting, userNodes);
-    });
-    $.get("/user/api/userRole", {
-        "roleId": roleId,
-        "inRole": true
-    }, function (userNodes) {
-        userTree = $.fn.zTree.init($("#userTree"), setting, userNodes);
-    });
-    //点击选择项回调
     /*<![CDATA[*/
-    function treeOnClick(event, treeId, treeNode, clickFlag) {
-        $.fn.zTree.getZTreeObj(treeId).expandNode(treeNode);
-        if ("userTree" == treeId) {
-            notUserTree.addNodes(null, treeNode);
-            userTree.removeNode(treeNode);
-        }
-        if ("notUserTree" == treeId) {
-            userTree.addNodes(null, treeNode);
-            notUserTree.removeNode(treeNode);
-        }
-    }
-    /*]]>*/
-
-
-    $("#roleForm").validate({
-        submitHandler: function (form) {
-            var ids = [];
-            var nodes = userTree.getCheckedNodes(false);
-            $.each(nodes, function (i, o) {
-                if (o.id != '0') {
-                    ids.push(o.id);
-                }
-            });
-            $("#userIds").val(ids);
-            form.submit();
+    $('#list').DataTable({
+        lengthChange: false,  //修改每页数量
+        searching: false,  //搜索功能
+        bPaginate: true,// 分页按钮
+        order: [[0, 'DESC']],   //默认排序字段
+        info: true,   //显示数据信息 第几页,总共几页等等
+        autoWidth: false, //是否固定宽度
+        bProcessing: false,    //服务器等等提示
+        bServerSide: true, //表示从服务器获取
+        bDestroy: true,
+        bSortCellsTop: true,
+        bSortClasses: true,
+        ajax: {
+            url: '/user/api/userRole',
+            data: {
+                roleId: $('#roleId').val()
+            }
+        },
+        columns: [
+            {data: 'displayName'},
+            {data: 'userName'},
+            {data: 'email'},
+        ],
+        select: true,
+        language: {
+            url: '/js/bootstrap/dataTable.oLanguage.json'
+        },
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if ($('#action').length > 0) {
+                $(nRow).append('<td><a href="/role/outUserInRole/?userId=' + aData["id"] + '&roleId=' + $("#roleId").val() + '">移除</a></td>')
+            }
         }
     });
+    /*]]>*/
 </script>
 </body>
 </html>

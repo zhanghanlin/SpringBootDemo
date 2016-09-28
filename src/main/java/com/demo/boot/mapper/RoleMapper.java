@@ -1,6 +1,7 @@
 package com.demo.boot.mapper;
 
 import com.demo.boot.entity.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface RoleMapper {
     int deleteRolePermission(String id);
 
     int insertRolePermission(Role record);
+
+    int outUserInRole(@Param("roleId") String roleId, @Param("userId") String userId);
 }

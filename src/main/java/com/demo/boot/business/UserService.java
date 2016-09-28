@@ -100,6 +100,21 @@ public class UserService {
     }
 
     /**
+     * 分页查询该角色下的用户
+     *
+     * @param id
+     * @param pageNo
+     * @param pageSize
+     * @param orderBy
+     * @return
+     */
+    public Page<User> getPageByRole(String id, int pageNo, int pageSize, String orderBy) {
+        Page<User> page = PageHelper.startPage(pageNo, pageSize, orderBy);
+        userMapper.getByRole(id);
+        return page;
+    }
+
+    /**
      * 写入用户角色关系
      *
      * @param user

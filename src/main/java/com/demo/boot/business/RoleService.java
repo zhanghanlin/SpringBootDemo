@@ -68,13 +68,18 @@ public class RoleService {
 
     /**
      * 根据角色Id删除权限关联
+     *
      * @param roleId
      */
-    public void deleteRolePermission(String roleId){
+    public void deleteRolePermission(String roleId) {
         roleMapper.deleteRolePermission(roleId);
     }
 
-    public void insertRolePermission(Role role){
+    public void insertRolePermission(Role role) {
         roleMapper.insertRolePermission(role);
+    }
+
+    public void outUserInRole(String roleId, String userId) {
+        roleMapper.outUserInRole(roleId, userId);
     }
 }

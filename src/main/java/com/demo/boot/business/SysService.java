@@ -110,4 +110,14 @@ public class SysService {
             userService.insertUserRole(user);
         }
     }
+
+    /**
+     * 将用户移除角色
+     *
+     * @param roleId
+     * @param userId
+     */
+    public void outUserInRole(String roleId, String userId) {
+        roleService.outUserInRole(roleId, userId);
+    }
 }

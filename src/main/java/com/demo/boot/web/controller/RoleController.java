@@ -67,9 +67,19 @@ public class RoleController {
     }
 
     @RequiresPermissions("role:edit")
+    @RequestMapping(value = "/assignInfo/{id}", method = RequestMethod.GET)
+    public ModelAndView assignInfo(@PathVariable String id) {
+        ModelAndView model = new ModelAndView("boot/roleAssign");
+        Role role = roleService.get(id);
+        model.addObject("role", role);
+        return model;
+    }
+
+
+    @RequiresPermissions("role:edit")
     @RequestMapping(value = "/assign/{id}", method = RequestMethod.GET)
     public ModelAndView assign(@PathVariable String id) {
-        ModelAndView model = new ModelAndView("boot/roleAssign");
+        ModelAndView model = new ModelAndView("boot/role2user");
         Role role = roleService.get(id);
         model.addObject("role", role);
         model.addObject("user", userService.getByRole(id));
@@ -88,6 +98,20 @@ public class RoleController {
     @RequestMapping(value = "/assign", method = RequestMethod.POST)
     public ModelAndView assign(Role role, String[] userIds) {
         sysService.assignUserToRole(role, userIds);
-        return new ModelAndView(new RedirectView("list"));
+        return new ModelAndView(new RedirectView("/role/assignInfo/" + role.getId()));
+    }
+
+    /**
+     * 将用户移除角色
+     *
+     * @param roleId
+     * @param userId
+     * @return
+     */
+    @RequiresPermissions("role:edit")
+    @RequestMapping(value = "/outUserInRole", method = RequestMethod.GET)
+    public ModelAndView outUserInRole(String roleId, String userId) {
+        sysService.outUserInRole(roleId, userId);
+        return new ModelAndView(new RedirectView("/role/assignInfo/" + roleId));
     }
 }

@@ -30,7 +30,7 @@ $(function () {
                 fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     if ($('#action').length > 0) {
                         $(nRow).append('<td>' +
-                            '<a href="/role/assign/' + aData["id"] + '">分配</a>&nbsp;&nbsp;' +
+                            '<a href="/role/assignInfo/' + aData["id"] + '">查看</a>&nbsp;&nbsp;' +
                             '<a href="/role/edit/' + aData["id"] + '">编辑</a></td>')
                     }
                 }
