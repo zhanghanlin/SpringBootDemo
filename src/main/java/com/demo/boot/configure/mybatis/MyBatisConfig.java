@@ -22,6 +22,7 @@ import java.util.Properties;
  * MyBatis基础配置
  */
 @Configuration
+// 启注解事务管理，等同于xml配置方式的 <tx:annotation-driven />
 @EnableTransactionManagement
 public class MyBatisConfig implements TransactionManagementConfigurer {
 

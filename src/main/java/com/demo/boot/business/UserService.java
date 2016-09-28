@@ -46,13 +46,9 @@ public class UserService {
      * @param user
      */
     public void update(User user) {
-        try {
-            user.preUpdate();
-            userMapper.update(user);
-            UserUtils.clearCache(user);
-        } catch (Exception e) {
-            throw new RuntimeException();
-        }
+        user.preUpdate();
+        userMapper.update(user);
+        UserUtils.clearCache(user);
     }
 
     /**
