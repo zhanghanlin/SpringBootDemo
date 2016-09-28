@@ -31,16 +31,21 @@
     from m_user
   </select>
   <select id="getByRole" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
+    SELECT
     <include refid="Base_Column_List" />
-    from m_user u, m_user_role ur
-    WHERE u.id = ur.user_id AND ur.role_id = #{id,jdbcType=VARCHAR}
+    FROM m_user u
+    JOIN m_user_role ur
+    ON u.id = ur.user_id AND ur.role_id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="getByNotRole" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
+    SELECT
     <include refid="Base_Column_List" />
-    from m_user u, m_user_role ur
-    WHERE u.id = ur.user_id AND ur.role_id != #{id,jdbcType=VARCHAR}
+    FROM m_user u
+      LEFT JOIN (SELECT *
+                 FROM m_user_role
+                 WHERE role_id = #{id,jdbcType=VARCHAR}) AS ur
+        ON ur.user_id = u.id
+    WHERE ur.role_id IS NULL
   </select>
   <select id="getByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
@@ -164,8 +169,8 @@
   </update>
   <insert id="insertUserRole" parameterType="com.demo.boot.entity.User">
     INSERT INTO m_user_role (user_id, role_id)
-    <foreach collection="roleIds" item="r" separator=" union all ">
-      SELECT #{id}, #{r}
+    <foreach collection="roles" item="r" separator=" union all ">
+      SELECT #{id}, #{r.id}
     </foreach>
   </insert>
   <delete id="deleteUserRole" parameterType="java.lang.String">

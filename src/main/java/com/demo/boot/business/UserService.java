@@ -33,14 +33,10 @@ public class UserService {
      * @return
      */
     public void insert(User user) {
-        try {
-            user.preInsert();
-            userMapper.insert(user);
-            if (StringUtils.isBlank(user.getId())) {
-                throw new RuntimeException("用户创建失败");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException();
+        user.preInsert();
+        userMapper.insert(user);
+        if (StringUtils.isBlank(user.getId())) {
+            throw new RuntimeException("用户创建失败");
         }
     }
 
@@ -114,6 +110,15 @@ public class UserService {
      */
     public void insertUserRole(User user) {
         userMapper.insertUserRole(user);
+    }
+
+    /**
+     * 清空用户角色关系
+     *
+     * @param id
+     */
+    public void deleteUserRole(String id) {
+        userMapper.deleteUserRole(id);
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.demo.boot.business;
 
 import com.demo.boot.dict.RoleEnum;
-import com.demo.boot.entity.*;
+import com.demo.boot.entity.Permission;
+import com.demo.boot.entity.Role;
+import com.demo.boot.entity.User;
 import com.demo.boot.utils.HashPassword;
 import com.demo.boot.utils.StringUtils;
 import com.demo.boot.utils.UserUtils;
@@ -37,22 +39,31 @@ public class SysService {
      * @param register
      * @return
      */
-    @Transactional
     public void register(Register register) {
-        try {
-            User user = new User();
-            user.setUserName(register.getUserName());
-            user.setPassword(HashPassword.pwdHash(register.getPassword()));
-            user.setDisplayName(register.getDisplayName());
+        User user = new User();
+        user.setUserName(register.getUserName());
+        user.setPassword(HashPassword.pwdHash(register.getPassword()));
+        user.setDisplayName(register.getDisplayName());
+        List<String> roleIds = Lists.newArrayList();
+        roleIds.add(RoleEnum.NORMAL_USER.getId());
+        user.setRoleIds(roleIds);
+        saveUser(user);
+    }
+
+    /**
+     * 保存/更新用户
+     *
+     * @param user
+     */
+    @Transactional
+    public void saveUser(User user) {
+        if (StringUtils.isBlank(user.getId())) {
             userService.insert(user);
-            List<String> userRoles = Lists.newArrayList();
-            userRoles.add(RoleEnum.NORMAL_USER.getId());
-            user.setRoleIds(userRoles);
-            userService.insertUserRole(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+        } else {
+            userService.update(user);
         }
+        userService.deleteUserRole(user.getId());
+        userService.insertUserRole(user);
     }
 
     /**
@@ -88,5 +99,26 @@ public class SysService {
         }
         MenuTree tree = new MenuTree(nodes);
         return tree.buildTree();
+    }
+
+    /**
+     * 给用户添加角色
+     *
+     * @param role
+     * @param user
+     * @return
+     */
+    public User assignUserToRole(Role role, User user) {
+        if (user == null) {
+            return null;
+        }
+        List<String> roleIds = user.getRoleIds();
+        if (roleIds.contains(role.getId())) {
+            return null;
+        }
+        roleIds.add(role.getId());
+        user.setRoleIds(roleIds);
+        saveUser(user);
+        return user;
     }
 }

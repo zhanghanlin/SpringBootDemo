@@ -24,8 +24,6 @@ public class User extends BaseEntity {
 
     private List<Role> roles = Lists.newArrayList();
 
-    private List<String> roleIds = Lists.newArrayList();
-
     public String getUserName() {
         return userName;
     }
@@ -84,11 +82,24 @@ public class User extends BaseEntity {
 
     @JsonIgnore
     public List<String> getRoleIds() {
+        List<String> roleIds = Lists.newArrayList();
+        for (Role role : roles) {
+            roleIds.add(role.getId());
+        }
         return roleIds;
     }
 
     public void setRoleIds(List<String> roleIds) {
-        this.roleIds = roleIds;
+        List<String> _roleIds = getRoleIds();
+        if (roles == null) roles = Lists.newArrayList();
+        for (String rid : roleIds) {
+            if (_roleIds.contains(rid)) {
+                continue;
+            }
+            Role role = new Role();
+            role.setId(rid);
+            roles.add(role);
+        }
     }
 
     public Set<String> getRolesKey() {

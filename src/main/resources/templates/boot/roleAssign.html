@@ -7,32 +7,37 @@
 </head>
 <body>
 <section class="content">
-    <input type="hidden" id="roleId" th:value="${role.id}"/>
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">角色分配</h3>
-        </div>
-        <div class="box-body">
-            <div class="col-sm-3">
-                <div class="btn-group-vertical">
-                    <button type="button" class="btn btn-default">清空分配</button>
-                    <button type="button" class="btn btn-default">全部分配</button>
-                    <button type="button" class="btn btn-default">保存分配</button>
+    <form id="roleForm" class="form-horizontal" action="/role/assign" method="post">
+        <input type="hidden" id="roleId" name="id" th:value="${role.id}"/>
+        <input type="hidden" id="roleName" name="name" th:value="${role.name}"/>
+        <input type="hidden" id="userIds" name="userIds"/>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">角色分配</h3>
+            </div>
+            <div class="box-body">
+                <div class="col-sm-3">
+                    <div class="btn-group-vertical">
+                        <button type="button" class="btn btn-default" id="clear">清空分配</button>
+                        <button type="button" class="btn btn-default" id="all">全部分配</button>
+                        <button type="submit" class="btn btn-default" id="save">保存分配</button>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <p>待分配</p>
+                    <div id="notUserTree" class="ztree"></div>
+                </div>
+                <div class="col-sm-3">
+                    <p>已分配</p>
+                    <div id="userTree" class="ztree"></div>
                 </div>
             </div>
-            <div class="col-sm-3">
-                <p>待分配</p>
-                <div id="notUserTree" class="ztree"></div>
-            </div>
-            <div class="col-sm-3">
-                <p>已分配</p>
-                <div id="userTree" class="ztree"></div>
-            </div>
+            <div class="box-footer"></div>
         </div>
-        <div class="box-footer"></div>
-    </div>
+    </form>
 </section>
 <script src="/js/jQuery/jquery.ztree.all-3.5.min.js"></script>
+<script src="/js/jQuery/jquery.validate.min.js"></script>
 <script th:inline="javascript">
     var roleId = $('#roleId').val();
     var setting = {
@@ -40,46 +45,48 @@
         data: {simpleData: {enable: true}},
         callback: {onClick: treeOnClick}
     };
-    var userTree, notUserTree, ids = [], notIds = [];
+    var userTree, notUserTree;
     $.get("/user/api/userRole", {
         "roleId": roleId,
         "inRole": false
     }, function (userNodes) {
-        $.each(userNodes, function (i, o) {
-            notIds.push(String(o.id));
-        });
         notUserTree = $.fn.zTree.init($("#notUserTree"), setting, userNodes);
     });
     $.get("/user/api/userRole", {
         "roleId": roleId,
         "inRole": true
     }, function (userNodes) {
-        $.each(userNodes, function (i, o) {
-            ids.push(String(o.id));
-        });
         userTree = $.fn.zTree.init($("#userTree"), setting, userNodes);
     });
     //点击选择项回调
     /*<![CDATA[*/
     function treeOnClick(event, treeId, treeNode, clickFlag) {
         $.fn.zTree.getZTreeObj(treeId).expandNode(treeNode);
-        var idsIndex = $.inArray(String(treeNode.id), ids);
-        var notIdsIndex = $.inArray(String(treeNode.id), notIds);
-        if (notIdsIndex < 0) return;
         if ("userTree" == treeId) {
-            if (idsIndex >= 0) {
-                userTree.removeNode(treeNode);
-                ids.splice(treeNode.id);
-            }
+            notUserTree.addNodes(null, treeNode);
+            userTree.removeNode(treeNode);
         }
         if ("notUserTree" == treeId) {
-            if (idsIndex < 0) {
-                userTree.addNodes(null, treeNode);
-                ids.push(treeNode.id, 1);
-            }
+            userTree.addNodes(null, treeNode);
+            notUserTree.removeNode(treeNode);
         }
     }
     /*]]>*/
+
+
+    $("#roleForm").validate({
+        submitHandler: function (form) {
+            var ids = [];
+            var nodes = userTree.getCheckedNodes(false);
+            $.each(nodes, function (i, o) {
+                if (o.id != '0') {
+                    ids.push(o.id);
+                }
+            });
+            $("#userIds").val(ids);
+            form.submit();
+        }
+    });
 </script>
 </body>
 </html>
