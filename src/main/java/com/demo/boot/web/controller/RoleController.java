@@ -6,7 +6,6 @@ import com.demo.boot.business.SysService;
 import com.demo.boot.business.UserService;
 import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.Role;
-import com.demo.boot.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,9 +87,7 @@ public class RoleController {
     @RequiresPermissions("role:edit")
     @RequestMapping(value = "/assign", method = RequestMethod.POST)
     public ModelAndView assign(Role role, String[] userIds) {
-        for (String uid : userIds) {
-            sysService.assignUserToRole(role, UserUtils.get(uid));
-        }
+        sysService.assignUserToRole(role, userIds);
         return new ModelAndView(new RedirectView("list"));
     }
 }

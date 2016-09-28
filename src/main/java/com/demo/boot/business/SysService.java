@@ -44,25 +44,10 @@ public class SysService {
         user.setUserName(register.getUserName());
         user.setPassword(HashPassword.pwdHash(register.getPassword()));
         user.setDisplayName(register.getDisplayName());
-        List<String> roleIds = Lists.newArrayList();
-        roleIds.add(RoleEnum.NORMAL_USER.getId());
-        user.setRoleIds(roleIds);
-        saveUser(user);
-    }
-
-    /**
-     * 保存/更新用户
-     *
-     * @param user
-     */
-    @Transactional
-    public void saveUser(User user) {
-        if (StringUtils.isBlank(user.getId())) {
-            userService.insert(user);
-        } else {
-            userService.update(user);
-        }
-        userService.deleteUserRole(user.getId());
+        userService.insert(user);
+        List<String> userRoles = Lists.newArrayList();
+        userRoles.add(RoleEnum.NORMAL_USER.getId());
+        user.setRoleIds(userRoles);
         userService.insertUserRole(user);
     }
 
@@ -105,20 +90,24 @@ public class SysService {
      * 给用户添加角色
      *
      * @param role
-     * @param user
+     * @param userIds
      * @return
      */
-    public User assignUserToRole(Role role, User user) {
-        if (user == null) {
-            return null;
+    @Transactional
+    public void assignUserToRole(Role role, String[] userIds) {
+        for (String uid : userIds) {
+            User user = UserUtils.get(uid);
+            if (user == null) {
+                return;
+            }
+            List<String> roleIds = user.getRoleIds();
+            if (roleIds.contains(role.getId())) {
+                return;
+            }
+            roleIds.add(role.getId());
+            user.setRoleIds(roleIds);
+            userService.deleteUserRole(user.getId());
+            userService.insertUserRole(user);
         }
-        List<String> roleIds = user.getRoleIds();
-        if (roleIds.contains(role.getId())) {
-            return null;
-        }
-        roleIds.add(role.getId());
-        user.setRoleIds(roleIds);
-        saveUser(user);
-        return user;
     }
 }
