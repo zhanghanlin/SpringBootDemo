@@ -111,6 +111,7 @@ public class SysService {
             user.setRoleIds(roleIds);
             userService.deleteUserRole(user.getId());
             userService.insertUserRole(user);
+            UserUtils.clearCache(user);
         }
     }
 
@@ -121,6 +122,11 @@ public class SysService {
      * @param userId
      */
     public void outUserInRole(String roleId, String userId) {
+        User user = UserUtils.get(userId);
+        if (user == null) {
+            return;
+        }
         roleService.outUserInRole(roleId, userId);
+        UserUtils.clearCache(user);
     }
 }

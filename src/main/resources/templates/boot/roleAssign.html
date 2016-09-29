@@ -5,6 +5,7 @@
     <div th:substituteby="/common/include"></div>
     <link rel="stylesheet" href="/css/bootstrap/dataTables.bootstrap.css"/>
     <link rel="stylesheet" href="/css/treeTable/zTreeStyle.min.css"/>
+    <link rel="stylesheet" href="/css/jbox/jbox.min.css"/>
 </head>
 <body>
 <section class="content">
@@ -23,8 +24,8 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <a th:href="'/role/assign/' + ${role.id}" class="btn btn-primary btn-sm"
-                               role="button">角色分配</a>
+                            <br/>
+                            <a class="btn btn-primary btn-sm" id="assign" role="button">角色分配</a>
                         </div>
                     </div>
                 </div>
@@ -57,6 +58,7 @@
 <script src="/js/jQuery/jquery.dataTables.min.js"></script>
 <script src="/js/bootstrap/dataTables.bootstrap.min.js"></script>
 <script src="/js/jQuery/jquery.ztree.all-3.5.min.js"></script>
+<script src="/js/jQuery/jquery.jBox-2.3.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
     $('#list').DataTable({
@@ -91,6 +93,25 @@
                 $(nRow).append('<td><a href="/role/outUserInRole/?userId=' + aData["id"] + '&roleId=' + $("#roleId").val() + '">移除</a></td>')
             }
         }
+    });
+    $('#assign').click(function () {
+        $.jBox('get:/role/assign/' + $('#roleId').val(), {
+            title: '角色分配',
+            height: 300,
+            submit: function (v, h, f) {
+                if (v == 'ok') {
+                    var ids = [];
+                    var nodes = userTree.getCheckedNodes(false);
+                    $.each(nodes, function (i, o) {
+                        if (o.id != '0') {
+                            ids.push(o.id);
+                        }
+                    });
+                    h.find("#userIds").val(ids);
+                    h.find('#roleForm').submit();
+                }
+            }
+        });
     });
     /*]]>*/
 </script>
