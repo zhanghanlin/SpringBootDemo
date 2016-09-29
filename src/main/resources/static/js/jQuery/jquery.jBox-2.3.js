@@ -129,7 +129,7 @@
 		j.push('<div class="jbox-container" style="width:auto; height:auto;">');
 		j.push('<a class="jbox-close" title="' + a.jBox.languageDefaults.close + '" onmouseover="$(this).addClass(\'jbox-close-hover\');" onmouseout="$(this).removeClass(\'jbox-close-hover\');" style="position:absolute; display:block; cursor:pointer; top:' + (0x6 + c.border) + 'px; right:' + (0x6 + c.border) + 'px; width:15px; height:15px;' + (c.showClose ? '' : 'display:none;') + '"></a>');
 		if (g) {
-			j.push('<div class="jbox-title-panel" style="height:25px;">');
+			j.push('<div class="jbox-title-panel" style="height:37px;">');
 			j.push('<div class="jbox-title' + (c.showIcon == true ? ' jbox-title-icon' : (c.showIcon == false ? '' : ' ' + c.showIcon)) + '" style="float:left; width:' + i + '; line-height:' + (a.browser.msie ? 0x19 : 0x18) + 'px; padding-left:' + (c.showIcon ? 0x12 : 0x5) + 'px;overflow:hidden;text-overflow:ellipsis;word-break:break-all;">' + (c.title == '' ? '&nbsp;' : c.title) + '</div>');
 			j.push('</div>')
 		};
@@ -234,7 +234,7 @@
 			};
 			r.push('<div id="jbox-state-' + N + '" class="jbox-state" style="display:none;">');
 			r.push('<div style="min-width:50px;width:' + (typeof c.width == 'number' ? c.width + 'px' : 'auto') + '; height:' + Q + ';">' + R + '<div id="jbox-content" class="jbox-content" style="height:' + Q + ';overflow:hidden;overflow-y:auto;">' + O.content + '</div></div>');
-			r.push('<div class="jbox-button-panel" style="height:25px;padding:5px 0 5px 0;text-align: right;' + (P ? '' : 'display:none;') + '">');
+			r.push('<div class="jbox-button-panel" style="height:37px;padding:5px 0 5px 0;text-align: right;' + (P ? '' : 'display:none;') + '">');
 			if (!c.isTip) {
 				r.push('<span class="jbox-bottom-text" style="float:left;display:block;line-height:25px;"></span>')
 			};

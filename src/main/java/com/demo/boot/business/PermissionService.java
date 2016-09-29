@@ -41,4 +41,18 @@ public class PermissionService {
     public List<Permission> getAll() {
         return permissionMapper.getAll();
     }
+
+    public Permission get(String id) {
+        return permissionMapper.get(id);
+    }
+
+    /**
+     * 更新权限
+     *
+     * @param permission
+     */
+    public void update(Permission permission) {
+        permission.preUpdate();
+        permissionMapper.update(permission);
+    }
 }

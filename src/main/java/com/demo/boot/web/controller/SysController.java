@@ -138,6 +138,4 @@ public class SysController {
     public ModelAndView internalServerError() {
         return new ModelAndView("error/500");
     }
-
-
 }
