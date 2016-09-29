@@ -36,7 +36,10 @@
                     <td th:text="${p.isSys}"></td>
                     <td th:text="${p.uniqueKey}"></td>
                     <shiro:hasPermission name="role:edit">
-                        <td><a th:href="'/perm/edit/'+${p.id}">编辑</a></td>
+                        <td>
+                            <a th:href="'/perm/edit?id='+${p.id}">编辑</a>&nbsp;
+                            <a th:href="'/perm/edit?parent.id='+${p.id}">添加子权限</a>
+                        </td>
                     </shiro:hasPermission>
                 </tr>
                 </tbody>

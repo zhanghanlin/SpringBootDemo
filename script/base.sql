@@ -112,21 +112,21 @@ VALUES ('2', '系统设置', '系统设置', NULL, 1, '0,1', NULL, NULL, 'mainFr
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
 VALUES ('3', '用户信息', '用户信息', NULL, 2, '0,1,2', '/user/list', NULL, 'mainFrame', 1, 1, 101);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('4', '查看', '查看用户信息', 'user:view', 3, '0,1,2,3', NULL, NULL, 'mainFrame', 0, 1, 1011);
+VALUES ('4', '查看', '查看用户信息', 'user:view', 3, '0,1,2,3', NULL, NULL, 'mainFrame', 0, 1, 10101);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('5', '修改', '修改用户信息', 'user:edit', 3, '0,1,2,3', NULL, NULL, 'mainFrame', 0, 1, 1012);
+VALUES ('5', '修改', '修改用户信息', 'user:edit', 3, '0,1,2,3', NULL, NULL, 'mainFrame', 0, 1, 10102);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
 VALUES ('6', '权限信息', '权限信息', NULL, 2, '0,1,2', '/perm/list', NULL, 'mainFrame', 1, 1, 102);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('7', '查看', '查看权限信息', 'perm:view', 6, '0,1,2,6', NULL, NULL, 'mainFrame', 0, 1, 1021);
+VALUES ('7', '查看', '查看权限信息', 'perm:view', 6, '0,1,2,6', NULL, NULL, 'mainFrame', 0, 1, 10201);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('8', '编辑', '编辑权限信息', 'perm:edit', 6, '0,1,2,6', NULL, NULL, 'mainFrame', 0, 1, 1022);
+VALUES ('8', '编辑', '编辑权限信息', 'perm:edit', 6, '0,1,2,6', NULL, NULL, 'mainFrame', 0, 1, 10202);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
 VALUES ('9', '角色信息', '角色信息', NULL, 2, '0,1,2', '/role/list', NULL, 'mainFrame', 1, 1, 103);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('10', '查看', '查看角色信息', 'role:view', 9, '0,1,2,9', NULL, NULL, 'mainFrame', 0, 1, 1031);
+VALUES ('10', '查看', '查看角色信息', 'role:view', 9, '0,1,2,9', NULL, NULL, 'mainFrame', 0, 1, 10301);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('11', '编辑', '编辑角色信息', 'role:edit', 9, '0,1,2,9', NULL, NULL, 'mainFrame', 0, 1, 1032);
+VALUES ('11', '编辑', '编辑角色信息', 'role:edit', 9, '0,1,2,9', NULL, NULL, 'mainFrame', 0, 1, 10302);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
 VALUES ('12', '日志信息', '日志信息', NULL, 1, '0,1', NULL, NULL, 'mainFrame', 1, 1, 2);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)

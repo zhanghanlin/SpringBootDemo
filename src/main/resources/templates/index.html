@@ -4,7 +4,7 @@
     <title>权限管理</title>
     <div th:substituteby="/common/include"></div>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" onload="changeFrameHeight()" onresize="changeFrameHeight()">
 <div class="wrapper">
     <div th:substituteby="/common/header :: header"></div>
     <div th:substituteby="/common/left :: aside"></div>
@@ -19,12 +19,8 @@
 <script>
     function changeFrameHeight() {
         var ifm = document.getElementById("mainFrame");
-        ifm.height = document.documentElement.clientHeight;
+        ifm.height = document.documentElement.clientHeight - 100;
     }
-    window.onResize = function () {
-        changeFrameHeight();
-    }
-    changeFrameHeight();
 </script>
 </body>
 </html>

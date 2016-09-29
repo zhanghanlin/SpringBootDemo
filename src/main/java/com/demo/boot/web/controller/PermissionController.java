@@ -36,14 +36,20 @@ public class PermissionController {
         if (permission.getParent() == null || StringUtils.isBlank(permission.getParent().getId())) {
             permission.setParent(new Permission(Permission.getRootId()));
         }
-        permission.setParent(permissionService.get(permission.getParent().getId()));
+        Permission parent = permissionService.get(permission.getParent().getId());
+        permission.setParent(parent);
         List<Permission> permList = permissionService.getAll();
         // 获取排序号，最末节点排序号+30
         if (StringUtils.isBlank(permission.getId())) {
             List<Permission> list = Lists.newArrayList();
-            Permission.sortList(list, permList, permission.getParentId(), false);
+            Permission.sortList(list, permList, parent.getId(), false);
             if (list.size() > 0) {
                 permission.setWeight(list.get(list.size() - 1).getWeight() + 1);
+            } else {
+                Permission.sortList(list, permList, parent.getParent().getId(), false);
+                if (list.size() > 0) {
+                    permission.setWeight(list.get(list.size() - 1).getWeight() * 100 + 1);
+                }
             }
         } else {
             permission = permissionService.get(permission.getId());
