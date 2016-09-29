@@ -150,7 +150,7 @@ public class Permission extends BaseEntity {
 
     @JsonIgnore
     public static String getRootId() {
-        return "0";
+        return "1";
     }
 
     @JsonIgnore
@@ -159,5 +159,12 @@ public class Permission extends BaseEntity {
             return null;
         }
         return parent.getId();
+    }
+
+    public Permission() {
+    }
+
+    public Permission(String id) {
+        super(id);
     }
 }

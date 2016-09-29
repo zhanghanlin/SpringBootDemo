@@ -12,7 +12,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">编辑权限</h3>
         </div>
-        <form id="permForm" class="form-horizontal" action="/perm/edit" method="post">
+        <form id="permForm" class="form-horizontal" action="/perm/save" method="post">
             <input type="hidden" name="id" th:value="${perm.id}"/>
             <div class="box-body">
                 <div class="form-group">
@@ -21,8 +21,7 @@
                         <div class="input-group">
                             <input type="hidden" name="parent.id" id="parentId" th:value="${perm.parent.id}"/>
                             <input type="text" name="parent.name" id="parentName" class="form-control"
-                                   th:value="${#strings.isEmpty(perm.parent.name)} ? '顶级权限' : ${perm.parent.name}"
-                                   readonly="readonly"/>
+                                   th:value="${perm.parent.name}" readonly="readonly"/>
                             <span class="input-group-addon" id="searchParent"><i class="fa fa-search"></i></span>
                         </div>
                     </div>
@@ -142,15 +141,10 @@
         node['pId'] = o.parent.id;
         zNodes.push(node);
     });
-    var node = {};
-    node['id'] = '0';
-    node['name'] = '顶级权限';
-    node['pId'] = '0';
-    zNodes.push(node);
     // 初始化树结构
     var tree;
     $('#searchParent').click(function () {
-        $.jBox('<div id="permTree" class="ztree"></div>', {
+        $.jBox('<div id="permTree" class="ztree" style="margin: 10px 25px"></div>', {
             title: '选择父级权限',
             height: 300,
             loaded: function () {

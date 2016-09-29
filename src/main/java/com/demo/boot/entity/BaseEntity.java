@@ -90,4 +90,11 @@ public class BaseEntity implements Serializable {
         }
         this.changedAt = new Date();
     }
+
+    BaseEntity() {
+    }
+
+    BaseEntity(String id) {
+        this.id = id;
+    }
 }

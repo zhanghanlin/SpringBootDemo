@@ -93,11 +93,6 @@
         node['pId'] = o.parent.id;
         zNodes.push(node);
     });
-    var node = {};
-    node['id'] = '0';
-    node['name'] = '权限列表';
-    node['pId'] = '0';
-    zNodes.push(node);
     // 初始化树结构
     var tree = $.fn.zTree.init($("#tree"), setting, zNodes);
     // 不选择父节点

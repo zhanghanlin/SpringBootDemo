@@ -27,7 +27,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="p,iterStat : ${perms}" th:id="${p.id}" th:attr="pid=${p.parent.id}">
+                <tr th:each="p,iterStat : ${perms}" th:id="${p.id}"
+                    th:attr="pid=(${p.parent.id} == '1' ? '0' : ${p.parent.id})">
                     <td th:text="${p.name}"></td>
                     <td th:text="${p.link}"></td>
                     <td th:text="${p.weight}"></td>

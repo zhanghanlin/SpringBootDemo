@@ -79,6 +79,9 @@ public class SysService {
         List<Permission> perms = UserUtils.getPerms();
         List<MenuNode> nodes = Lists.newArrayList();
         for (Permission p : perms) {
+            if (p.getId().equals(Permission.getRootId())) {
+                continue;
+            }
             MenuNode node = new MenuNode(p);
             nodes.add(node);
         }

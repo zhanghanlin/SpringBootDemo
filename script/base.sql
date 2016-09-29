@@ -85,7 +85,7 @@ CREATE TABLE `m_permission` (
   COMMENT '是否在菜单中显示',
   `is_sys`     INT(1)        NOT NULL         DEFAULT 1
   COMMENT '是否系统菜单',
-  `weight`     INT(3) COMMENT '权重,排序使用',
+  `weight`     INT(10) COMMENT '权重,排序使用',
   `status`     INT(1)        NOT NULL         DEFAULT 0
   COMMENT '状态,默认正常',
   `created_at` DATETIME      NOT NULL         DEFAULT NOW()
@@ -106,29 +106,31 @@ CREATE TABLE `m_permission` (
   DEFAULT CHARSET = utf8;
 
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('1', '系统设置', '系统设置', NULL, 0, '0', NULL, NULL, 'mainFrame', 1, 1, 2);
+VALUES ('1', '权限菜单', '顶级权限', NULL, 0, '0', NULL, NULL, NULL, 1, 1, 0);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('2', '用户信息', '用户信息', NULL, 1, '0,1', '/user/list', NULL, 'mainFrame', 1, 1, 3);
+VALUES ('2', '系统设置', '系统设置', NULL, 1, '0,1', NULL, NULL, 'mainFrame', 1, 1, 1);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('4', '查看', '查看用户信息', 'user:view', 2, '0,1,2', NULL, NULL, 'mainFrame', 0, 1, 4);
+VALUES ('3', '用户信息', '用户信息', NULL, 2, '0,1,2', '/user/list', NULL, 'mainFrame', 1, 1, 101);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('5', '修改', '修改用户信息', 'user:edit', 2, '0,1,2', NULL, NULL, 'mainFrame', 0, 1, 5);
+VALUES ('4', '查看', '查看用户信息', 'user:view', 3, '0,1,2,3', NULL, NULL, 'mainFrame', 0, 1, 1011);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('6', '权限信息', '权限信息', NULL, 1, '0,1', '/perm/list', NULL, 'mainFrame', 1, 1, 6);
+VALUES ('5', '修改', '修改用户信息', 'user:edit', 3, '0,1,2,3', NULL, NULL, 'mainFrame', 0, 1, 1012);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('7', '查看', '查看权限信息', 'perm:view', 6, '0,1,6', NULL, NULL, 'mainFrame', 0, 1, 7);
+VALUES ('6', '权限信息', '权限信息', NULL, 2, '0,1,2', '/perm/list', NULL, 'mainFrame', 1, 1, 102);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('8', '编辑', '编辑权限信息', 'perm:edit', 6, '0,1,6', NULL, NULL, 'mainFrame', 0, 1, 8);
+VALUES ('7', '查看', '查看权限信息', 'perm:view', 6, '0,1,2,6', NULL, NULL, 'mainFrame', 0, 1, 1021);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('9', '角色信息', '角色信息', NULL, 1, '0,1', '/role/list', NULL, 'mainFrame', 1, 1, 9);
+VALUES ('8', '编辑', '编辑权限信息', 'perm:edit', 6, '0,1,2,6', NULL, NULL, 'mainFrame', 0, 1, 1022);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('10', '查看', '查看角色信息', 'role:view', 9, '0,1,9', NULL, NULL, 'mainFrame', 0, 1, 10);
+VALUES ('9', '角色信息', '角色信息', NULL, 2, '0,1,2', '/role/list', NULL, 'mainFrame', 1, 1, 103);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('11', '编辑', '编辑角色信息', 'role:edit', 9, '0,1,9', NULL, NULL, 'mainFrame', 0, 1, 11);
+VALUES ('10', '查看', '查看角色信息', 'role:view', 9, '0,1,2,9', NULL, NULL, 'mainFrame', 0, 1, 1031);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('12', '日志信息', '日志信息', NULL, 0, '0,', NULL, NULL, 'mainFrame', 1, 1, 12);
+VALUES ('11', '编辑', '编辑角色信息', 'role:edit', 9, '0,1,2,9', NULL, NULL, 'mainFrame', 0, 1, 1032);
 INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
-VALUES ('13', '数据库监控', '数据库监控', NULL, 12, '0,12', '/druid/datasource.html', NULL, '_blank', 1, 1, 13);
+VALUES ('12', '日志信息', '日志信息', NULL, 1, '0,1', NULL, NULL, 'mainFrame', 1, 1, 2);
+INSERT INTO m_permission (id, name, note, unique_key, parent_id, parent_ids, link, icon, target, is_show, is_sys, weight)
+VALUES ('13', '数据库监控', '数据库监控', NULL, 12, '0,1,12', '/druid/datasource.html', NULL, '_blank', 1, 1, 201);
 
 -- ----------------------------
 -- Table structure for `template`
