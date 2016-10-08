@@ -6,6 +6,7 @@ import com.demo.boot.business.SysService;
 import com.demo.boot.business.UserService;
 import com.demo.boot.entity.Permission;
 import com.demo.boot.entity.Role;
+import com.google.common.collect.Lists;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,9 +46,13 @@ public class RoleController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable String id) {
         ModelAndView model = new ModelAndView("boot/roleInput");
-        Role role = roleService.get(id);
-        List<Permission> perms = permissionService.getByRole(id);
+        Role role = new Role();
         List<Permission> allPerm = permissionService.getAll();
+        List<Permission> perms = Lists.newArrayList();
+        if (!id.equals("0")) {
+            role = roleService.get(id);
+            perms = permissionService.getByRole(id);
+        }
         model.addObject("role", role);
         model.addObject("perms", perms);
         model.addObject("allPerm", allPerm);

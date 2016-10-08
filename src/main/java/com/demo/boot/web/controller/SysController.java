@@ -3,6 +3,7 @@ package com.demo.boot.web.controller;
 import com.demo.boot.business.SysService;
 import com.demo.boot.entity.User;
 import com.demo.boot.utils.CacheUtils;
+import com.demo.boot.utils.StringUtils;
 import com.demo.boot.utils.UserUtils;
 import com.demo.boot.web.vo.Login;
 import com.demo.boot.web.vo.Register;
@@ -62,8 +63,13 @@ public class SysController {
             //每个Realm都能在必要时对提交的AuthenticationTokens作出反应
             //所以这一步在调用login(token)方法时,它会走到MyRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法
             LOG.info("对用户[" + username + "]进行登录验证..验证开始");
-            currentUser.login(token);
-            LOG.info("对用户[" + username + "]进行登录验证..验证通过");
+            if (StringUtils.isBlank(username) || StringUtils.isBlank(login.getPassword())) {
+                LOG.info("请输入用户名或密码");
+                redirectAttributes.addFlashAttribute("message", "请输入用户名或密码");
+            } else {
+                currentUser.login(token);
+                LOG.info("对用户[" + username + "]进行登录验证..验证通过");
+            }
         } catch (UnknownAccountException uae) {
             LOG.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
             redirectAttributes.addFlashAttribute("message", "未知账户");

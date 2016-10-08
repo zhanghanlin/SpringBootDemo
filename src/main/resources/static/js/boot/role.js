@@ -3,7 +3,7 @@ $(function () {
         table: function () {
             $('#list').DataTable({
                 bPaginate: true,// 分页按钮
-                lengthChange: true,  //修改每页数量
+                lengthChange: false,  //修改每页数量
                 searching: false,  //搜索功能
                 order: [[0, 'DESC']],   //默认排序字段
                 info: true,   //显示数据信息 第几页,总共几页等等
@@ -33,6 +33,10 @@ $(function () {
                             '<a href="/role/assignInfo/' + aData["id"] + '">查看</a>&nbsp;&nbsp;' +
                             '<a href="/role/edit/' + aData["id"] + '">编辑</a></td>')
                     }
+                },
+                fnInitComplete: function () {
+                    if ($('#addRole').length > 0) return;
+                    $('#list_wrapper .row:first div:first').append('<a href="/role/edit/0" id="addRole" type="button" class="btn btn-default">新增角色</a>')
                 }
             });
         }
