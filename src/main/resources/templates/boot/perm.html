@@ -12,38 +12,47 @@
             <h3 class="box-title">权限信息</h3>
         </div>
         <div class="box-body">
-            <table id="list" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>名称</th>
-                    <th>链接</th>
-                    <th>排序</th>
-                    <th>可见</th>
-                    <th>系统菜单</th>
-                    <th>权限标识</th>
-                    <shiro:hasPermission name="role:edit">
-                        <th id="action">操作</th>
-                    </shiro:hasPermission>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="p,iterStat : ${perms}" th:id="${p.id}"
-                    th:attr="pid=(${p.parent.id} == '1' ? '0' : ${p.parent.id})">
-                    <td th:text="${p.name}"></td>
-                    <td th:text="${p.link}"></td>
-                    <td th:text="${p.weight}"></td>
-                    <td th:text="${p.isShow}"></td>
-                    <td th:text="${p.isSys}"></td>
-                    <td th:text="${p.uniqueKey}"></td>
-                    <shiro:hasPermission name="role:edit">
-                        <td>
-                            <a th:href="'/perm/edit?id='+${p.id}">编辑</a>&nbsp;
-                            <a th:href="'/perm/edit?parent.id='+${p.id}">添加子权限</a>
-                        </td>
-                    </shiro:hasPermission>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="/perm/edit?parent.id=1" id="addPerm" type="button" class="btn btn-default">新增权限</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="list" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>链接</th>
+                            <th>排序</th>
+                            <th>可见</th>
+                            <th>系统菜单</th>
+                            <th>权限标识</th>
+                            <shiro:hasPermission name="role:edit">
+                                <th id="action">操作</th>
+                            </shiro:hasPermission>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="p,iterStat : ${perms}" th:id="${p.id}"
+                            th:attr="pid=(${p.parent.id} == '1' ? '0' : ${p.parent.id})">
+                            <td th:text="${p.name}"></td>
+                            <td th:text="${p.link}"></td>
+                            <td th:text="${p.weight}"></td>
+                            <td th:text="${p.isShow}"></td>
+                            <td th:text="${p.isSys}"></td>
+                            <td th:text="${p.uniqueKey}"></td>
+                            <shiro:hasPermission name="role:edit">
+                                <td>
+                                    <a th:href="'/perm/edit?id='+${p.id}">编辑</a>&nbsp;
+                                    <a th:href="'/perm/edit?parent.id='+${p.id}">添加子权限</a>
+                                </td>
+                            </shiro:hasPermission>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </section>
